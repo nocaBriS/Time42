@@ -24,7 +24,7 @@ public class ProjectFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         projectViewModel =
                 new ViewModelProvider(this).get(ProjectViewModel.class);
-        View root = inflater.inflate(R.layout.project_fragment, container, false);
+        View root = inflater.inflate(R.layout.fragment_project, container, false);
         final TextView textView = root.findViewById(R.id.project_text);
         projectViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

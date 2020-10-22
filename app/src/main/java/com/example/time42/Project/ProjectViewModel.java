@@ -9,7 +9,7 @@ public class ProjectViewModel extends ViewModel {
 
     public ProjectViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is Project fragment");
     }
 
     public LiveData<String> getText() {

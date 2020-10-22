@@ -8,7 +8,7 @@
 
     <string name="menu_home">Projekte</string>
     <string name="menu_project">Projekte</string>
-    <string name="menu_profil">Profil</string>
+    <string name="menu_profile">Profil</string>
     <string name="menu_Calender">Kalender</string>
 
     <string name="nav_header_name">Name:</string>

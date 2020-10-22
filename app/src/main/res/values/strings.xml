@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Time42</string>
+    <string name="search">Suchen</string>
+    <string name="content_description_search">Suchen sie nach Projekten</string>
+    <string name="more">mehr</string>
+    <string name="content_description_more">Weiter Optionen</string>
+
+
+    <string name="menu_home">Projekte</string>
+    <string name="menu_project">Projekte</string>
+    <string name="menu_profil">Profil</string>
+    <string name="menu_Calender">Kalender</string>
+
+    <string name="nav_header_name">Name:</string>
+    <string name="nav_header_bild">bild</string>
+    <string name="nav_header_email">Email:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

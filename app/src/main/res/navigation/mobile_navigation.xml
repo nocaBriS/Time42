@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/profile_navigation"
+        android:name="com.example.time42.Profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/project_navigation"
+        android:name="com.example.time42.Project.ProjectFragment"
+        android:label="project_fragment"
+        tools:layout="@layout/project_fragment" />
+    <fragment
+        android:id="@+id/home_navigation"
+        android:name="com.example.time42.Home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+</navigation>

@@ -25,7 +25,7 @@ public class ProjectFragment extends Fragment {
         projectViewModel =
                 new ViewModelProvider(this).get(ProjectViewModel.class);
         View root = inflater.inflate(R.layout.fragment_project, container, false);
-        final TextView textView = root.findViewById(R.id.project_text);
+        final TextView textView = root.findViewById(R.id.textView2);
         projectViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

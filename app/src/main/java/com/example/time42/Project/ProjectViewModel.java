@@ -4,15 +4,30 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.time42.Object.Project;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 public class ProjectViewModel extends ViewModel {
-    private MutableLiveData<String> mText;
+
+    ArrayList<Project> list = new ArrayList<>();
+
+    Project tmp1 = new Project("Time42", "15.10.2020", "15.04.2021");
+    Project tmp2 = new Project("Test", "15.10.2020", "15.04.2021");
+
+    private MutableLiveData<ArrayList<Project>> mObj;
 
     public ProjectViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Project fragment");
+
+        list.add(tmp1);
+        list.add(tmp2);
+
+        mObj = new MutableLiveData<>();
+        mObj.setValue(list);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<ArrayList<Project>> getProject() {
+        return mObj;
     }
 }

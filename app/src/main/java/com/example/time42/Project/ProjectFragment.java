@@ -1,38 +1,58 @@
 package com.example.time42.Project;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
+import com.example.time42.Object.Project;
 import com.example.time42.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectFragment extends Fragment {
 
     private ProjectViewModel projectViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        projectViewModel =
-                new ViewModelProvider(this).get(ProjectViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_project, container, false);
-        final TextView textView = root.findViewById(R.id.textView2);
-        projectViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+    private List<Project> items;
+    private ListView mListView;
+
+    View root;
+
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
+
+        root = inflater.inflate(R.layout.fragment_project, container, false);
+
+        mListView = root.findViewById(R.id.list);
+
+        projectViewModel.getProject().observe(getViewLifecycleOwner(), (Observer<List<Project>>) s -> {
+
+            items = s;
+            bindAdapterToListView(mListView);
+
         });
+
         return root;
+    }
+
+    private void bindAdapterToListView(ListView lv)
+    {
+
+        lv.setAdapter(new ArrayAdapter<Project>(this.getContext(),
+                R.layout.list_item_project_small, R.id.ProjektName,
+                items));
     }
 
 }

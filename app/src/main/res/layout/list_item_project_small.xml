@@ -7,27 +7,40 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/project_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="256dp"
-        android:text="Projektname"
-        android:textSize="24sp"
+        android:id="@+id/ProjektName"
+        android:layout_width="194dp"
+        android:layout_height="49dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Name"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
-        android:id="@+id/bisWannText"
+        android:id="@+id/VonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="288dp"
-        android:text="bisWann"
+        android:text="15.10.2020"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/project_name" />
+        app:layout_constraintTop_toBottomOf="@+id/ProjektName"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <TextView
+        android:id="@+id/BisText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15.04.2021"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ProjektName"
+        app:layout_constraintVertical_bias="0.026" />
 </androidx.constraintlayout.widget.ConstraintLayout>

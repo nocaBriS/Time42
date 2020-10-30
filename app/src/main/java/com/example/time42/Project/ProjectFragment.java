@@ -50,7 +50,7 @@ public class ProjectFragment extends Fragment {
     private void bindAdapterToListView(ListView lv)
     {
 
-        lv.setAdapter(new ArrayAdapter<Project>(this.getContext(),
+        lv.setAdapter(new ArrayAdapter<>(this.getContext(),
                 R.layout.list_item_project_small, R.id.ProjektName,
                 items));
     }

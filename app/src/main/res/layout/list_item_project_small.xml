@@ -5,31 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:divider="@android:drawable/divider_horizontal_textfield"
     android:orientation="vertical"
     android:paddingHorizontal="8dp"
     android:paddingVertical="8dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
+        android:descendantFocusability="blocksDescendants"
+        app:cardCornerRadius="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:showDividers="middle|beginning|end|none">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="232dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/CardImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="202dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:focusable="false"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/test" />
 
                 <TextView
@@ -41,27 +47,28 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
+                    android:focusable="false"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Name"
+                    android:textColor="#9EFFFFFF"
                     android:textSize="36sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="24dp">
 
                 <TextView
                     android:id="@+id/BisText"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="44dp"
-                    android:layout_marginEnd="212dp"
                     android:layout_toEndOf="@+id/VonText"
+                    android:focusable="false"
                     android:fontFamily="@font/roboto_light"
                     android:text="15.04.2021" />
 
@@ -69,11 +76,50 @@
                     android:id="@+id/VonText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="44dp"
+                    android:focusable="false"
                     android:fontFamily="@font/roboto_light"
                     android:text="15.04.2021" />
+
+                <ImageButton
+                    android:id="@+id/expandButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="24dp"
+
+                    android:background="#00FFFFFF"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_expand_more" />
+
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="70dp"
+                    android:layout_height="22dp"
+                    android:layout_below="@+id/VonText"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="43dp"
+                    android:focusable="false"
+                    android:text="TextView"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_below="@+id/BisText"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="128dp"
+                    android:layout_marginTop="45dp"
+                    android:focusable="false"
+                    android:text="TextView"
+                    android:visibility="visible" />
+
             </RelativeLayout>
 
         </LinearLayout>

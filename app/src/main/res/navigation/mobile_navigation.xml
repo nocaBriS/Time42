@@ -20,4 +20,10 @@
         android:name="com.example.time42.Home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_calender"
+        android:name="com.example.time42.Calender.CalenderFragment"
+        android:label="Kalender"
+        tools:layout="@layout/fragment_calender" />
+
 </navigation>

@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        final TextView textView = root.findViewById(R.id.home_text);
+        final TextView textView = root.findViewById(R.id.textView7);
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }

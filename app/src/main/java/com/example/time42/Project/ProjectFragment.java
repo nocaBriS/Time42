@@ -30,9 +30,7 @@ public class ProjectFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
-
         root = inflater.inflate(R.layout.fragment_project, container, false);
-
         mListView = root.findViewById(R.id.list);
 
         projectViewModel.getProject().observe(getViewLifecycleOwner(), (Observer<List<Project>>) s -> {
@@ -50,7 +48,7 @@ public class ProjectFragment extends Fragment {
     private void bindAdapterToListView(ListView lv)
     {
         lv.setAdapter(new ProjectAdapter(this.getContext(),
-                R.layout.project_list_carditem,
+                R.layout.listitem_project,
                 items));
     }
 

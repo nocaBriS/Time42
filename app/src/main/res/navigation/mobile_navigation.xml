@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_calender"
-        android:name="com.example.time42.Calender.CalenderFragment"
+        android:name="com.example.time42.Calendar.CalendarFragment"
         android:label="Kalender"
         tools:layout="@layout/fragment_calender" />
 

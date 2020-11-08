@@ -1,6 +1,10 @@
 package com.example.time42;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,17 +19,29 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedpreferences = getSharedPreferences("logPref",Context.MODE_PRIVATE);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        //Namen und Email TextView in der Navbar
+        View headerView = navigationView.getHeaderView(0);
+        TextView nav_nameText = headerView.findViewById(R.id.nav_nameText);
+        TextView nav_emailText = headerView.findViewById(R.id.nav_emailText);
+
+        //Setzt Namen und Email in der Navbar zu UserDaten
+        nav_nameText.setText(sharedpreferences.getString("name", "Name:"));
+        nav_emailText.setText(sharedpreferences.getString("email", "Email:"));
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_project, R.id.nav_profile)

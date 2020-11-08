@@ -14,7 +14,6 @@
     <string name="nav_header_name">Name:</string>
     <string name="nav_header_bild">bild</string>
     <string name="nav_header_email">Email:</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

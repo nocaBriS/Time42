@@ -15,11 +15,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     SharedPreferences sharedpreferences;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         //Setzt Namen und Email in der Navbar zu UserDaten
         nav_nameText.setText(sharedpreferences.getString("name", "Name:"));
         nav_emailText.setText(sharedpreferences.getString("email", "Email:"));
+
+        DocumentReference docRef = db.collection("User").document(sharedpreferences.getString("name", "Name:"));
+
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_project, R.id.nav_profile)

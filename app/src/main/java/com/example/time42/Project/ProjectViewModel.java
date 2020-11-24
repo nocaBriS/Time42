@@ -14,6 +14,8 @@ public class ProjectViewModel extends ViewModel {
 
     Project tmp1 = new Project("Time42", "15.10.2020", "15.04.2021");
     Project tmp2 = new Project("Test", "15.10.2020", "15.04.2021");
+    Project tmp3 = new Project("Time42", "15.10.2020", "15.04.2021");
+
 
     private MutableLiveData<ArrayList<Project>> mObj;
 
@@ -21,6 +23,7 @@ public class ProjectViewModel extends ViewModel {
 
         list.add(tmp1);
         list.add(tmp2);
+        list.add(tmp3);
 
         mObj = new MutableLiveData<>();
         mObj.setValue(list);

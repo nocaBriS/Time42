@@ -1,6 +1,8 @@
 package com.example.time42.Project;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.time42.Object.Project;
 import com.example.time42.R;
@@ -23,7 +28,6 @@ public class ProjectAdapter extends BaseAdapter{
     private TextView text2;
     private TextView text3;
     private ImageButton btn;
-    private boolean isexpand = false;
 
     public ProjectAdapter(Context ctx, int layoutId, List<Project> list)
     {
@@ -53,31 +57,7 @@ public class ProjectAdapter extends BaseAdapter{
         ((TextView) listItem.findViewById(R.id.VonText)).setText(project.getStart());
         ((TextView) listItem.findViewById(R.id.BisText)).setText(project.getEnd());
 
-        text2 = listItem.findViewById(R.id.textView2);
-        text3 = listItem.findViewById(R.id.textView3);
-        btn = listItem.findViewById(R.id.expandButton);
-        listItem.setOnClickListener(v -> expand());
-        listItem.findViewById(R.id.expandButton).setOnClickListener(v -> expand());
-
         return listItem;
-    }
-
-    private void expand()
-    {
-
-        if(!isexpand)
-        {
-            this.text2.setVisibility(View.VISIBLE);
-            this.text3.setVisibility(View.VISIBLE);
-            btn.setImageResource(R.drawable.ic_expand_less);
-        }else{
-            this.text2.setVisibility(View.GONE);
-            this.text3.setVisibility(View.GONE);
-            btn.setImageResource(R.drawable.ic_expand_more);
-        }
-
-        isexpand = !isexpand;
-
     }
 
 }

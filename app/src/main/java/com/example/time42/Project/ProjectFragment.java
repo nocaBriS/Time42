@@ -1,6 +1,5 @@
 package com.example.time42.Project;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -10,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -39,18 +38,19 @@ public class ProjectFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
-
         root = inflater.inflate(R.layout.fragment_project, container, false);
-        mListView = root.findViewById(R.id.list);
 
-        // Create the observer which updates the UI.
-        final Observer<ArrayList<Project>> nameObserver = s -> {
-            // Update the UI, in this case, a TextView.
-            items = s;
+        mListView = root.findViewById(R.id.list);
+        ProgressBar progBar = root.findViewById(R.id.progressBar);
+
+        progBar.setVisibility(View.VISIBLE);
+
+        projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
+        projectViewModel.getProject().observe(getViewLifecycleOwner(), list -> {
+            items = list;
             bindAdapterToListView(mListView);
-        };
-        projectViewModel.getProject().observe(getViewLifecycleOwner(), nameObserver);
+            progBar.setVisibility(View.GONE);
+        });
 
         mListView.setOnItemClickListener((parent, view, position, id) -> expand(view));
 

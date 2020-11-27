@@ -21,10 +21,6 @@ public class ProjectAdapter extends BaseAdapter {
     private final int layoutId;
     private final LayoutInflater inflater;
 
-    private TextView text2;
-    private TextView text3;
-    private ImageButton btn;
-
     public ProjectAdapter(Context ctx, int layoutId, List<Project> list) {
         this.list = list;
         this.layoutId = layoutId;

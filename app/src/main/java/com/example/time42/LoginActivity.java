@@ -45,10 +45,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if(sharedpreferences.getString("name",null) != null)
         {
-            Log.i("test", sharedpreferences.getString("name", "nix"));
             launchActivity();
         }
-        Log.i("test", sharedpreferences.getString("name", "nix"));
 
         btnlogin.setOnClickListener(view -> getTest());
 

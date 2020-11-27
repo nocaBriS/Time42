@@ -5,26 +5,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.time42.Object.Project;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class ProjectViewModel extends ViewModel {
+public class ProjectViewModel extends AndroidViewModel {
 
     ArrayList<Project> list = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -32,13 +24,21 @@ public class ProjectViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<Project>> mObj;
 
-    public ProjectViewModel() {
-        //super(application);
+    public MutableLiveData<ArrayList<Project>> getProject() {
+        if (mObj == null) {
+            mObj = new MutableLiveData<ArrayList<Project>>();
+        }
+        return mObj;
+    }
 
-        // = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
-        //String name = sharedpreferences.getString("name", "test");
+    public ProjectViewModel(Application application) {
+        super(application);
 
-        CollectionReference proRef = db.collection("User").document("admin").collection("Project");
+        sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
+        String name = sharedpreferences.getString("name", "test");
+        Log.d("test", "test");
+
+        CollectionReference proRef = db.collection("User").document(name).collection("Project");
         proRef.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -47,24 +47,12 @@ public class ProjectViewModel extends ViewModel {
                             list.add(tmp);
                             Log.d("test", tmp.toString());
                         }
+                        mObj.setValue(list);
                     } else {
                         Log.d("test", "Error getting documents: ", task.getException());
                     }
                 });
 
-        mObj = new MutableLiveData<ArrayList<Project>>();
-        mObj.setValue(list);
-    }
-
-
-
-    public MutableLiveData<ArrayList<Project>> getProject() {
-        if(mObj == null)
-        {
-            mObj = new MutableLiveData<ArrayList<Project>>();
-
-        }
-        return mObj;
     }
 
 }

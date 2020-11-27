@@ -1,13 +1,15 @@
 package com.example.time42.Object;
 
 
+import java.util.Date;
+
 public class Project {
 
     String name;
-    String start;
-    String end;
+    Date start;
+    Date end;
 
-    public Project(String name, String start, String end) {
+    public Project(String name, Date start, Date end) {
         this.name = name;
         this.start = start;
         this.end = end;
@@ -21,24 +23,19 @@ public class Project {
         this.name = name;
     }
 
-    public String getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Date end) {
         this.end = end;
-    }
-
-    @Override
-    public String toString() {
-        return name + start + end;
     }
 }

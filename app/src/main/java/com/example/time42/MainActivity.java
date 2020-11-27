@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         nav_nameText.setText(sharedpreferences.getString("name", "Name:"));
         nav_emailText.setText(sharedpreferences.getString("email", "Email:"));
 
-        DocumentReference docRef = db.collection("User").document(sharedpreferences.getString("name", "Name:"));
-
-
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_project, R.id.nav_profile)
                 .setDrawerLayout(drawer)

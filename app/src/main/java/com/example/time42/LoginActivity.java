@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
     private void getTest()
     {
 
-        Log.i("getData", nameText.getText().toString());
         DocumentReference docRef = db.collection("User").document(nameText.getText().toString());
         docRef
                 .get()
@@ -72,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                            Log.i("getData", "DocumentSnapshot data: " + document.getData());
-                            Log.i("getData", "password : " + document.get("password"));
 
                                 if(document.get("password").equals(passText.getText().toString()))
                                 {

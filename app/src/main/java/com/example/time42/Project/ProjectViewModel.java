@@ -26,7 +26,7 @@ public class ProjectViewModel extends AndroidViewModel {
 
     public MutableLiveData<ArrayList<Project>> getProject() {
         if (mObj == null) {
-            mObj = new MutableLiveData<ArrayList<Project>>();
+            mObj = new MutableLiveData<>();
         }
         return mObj;
     }

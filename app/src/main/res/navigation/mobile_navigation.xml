@@ -14,7 +14,11 @@
         android:id="@+id/nav_project"
         android:name="com.example.time42.Project.ProjectFragment"
         android:label="@string/menu_project"
-        tools:layout="@layout/fragment_project" />
+        tools:layout="@layout/fragment_project" >
+        <action
+            android:id="@+id/action_nav_project_to_nav_time"
+            app:destination="@id/nav_time" />
+    </fragment>
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.time42.Home.HomeFragment"
@@ -25,5 +29,10 @@
         android:name="com.example.time42.Calendar.CalendarFragment"
         android:label="Kalender"
         tools:layout="@layout/fragment_calender" />
+    <fragment
+        android:id="@+id/nav_time"
+        android:name="com.example.time42.Time.TimeFragment"
+        android:label="Zeit"
+        tools:layout="@layout/fragment_time" />
 
 </navigation>

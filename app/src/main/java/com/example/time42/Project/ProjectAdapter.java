@@ -44,7 +44,7 @@ public class ProjectAdapter extends BaseAdapter {
         Project project = list.get(i);
         View listItem = (view == null) ? inflater.inflate(this.layoutId, null) : view;
         ((TextView) listItem.findViewById(R.id.ProjektName)).setText(project.getName());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
         ((TextView) listItem.findViewById(R.id.VonText)).setText(dateFormat.format(project.getStart()));
         ((TextView) listItem.findViewById(R.id.BisText)).setText(dateFormat.format(project.getEnd()));

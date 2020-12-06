@@ -1,12 +1,16 @@
 package com.example.time42.Project;
 
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
+import android.transition.Transition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -15,13 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.time42.Object.Project;
 import com.example.time42.R;
+import com.example.time42.Time.TimeFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectFragment extends Fragment {
@@ -52,9 +57,34 @@ public class ProjectFragment extends Fragment {
             progBar.setVisibility(View.GONE);
         });
 
-        mListView.setOnItemClickListener((parent, view, position, id) -> expand(view));
+        //mListView.setOnItemClickListener((parent, view, position, id) -> test(view, position));
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", items.get(position).getId());
+
+            TimeFragment myFragment =  new TimeFragment();
+            myFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment, myFragment, null)
+                            .setReorderingAllowed(true)
+                            .addToBackStack(null) // name can be null
+                            .commit();
+
+                }
+        );
+
 
         return root;
+    }
+
+    private void test(View v, int pos) {
+
+        Log.i("ProjectFragment", items.get(pos).getId() + ": id");
+        Navigation.createNavigateOnClickListener(R.id.nav_time, null);
+
     }
 
     private void expand(View v) {

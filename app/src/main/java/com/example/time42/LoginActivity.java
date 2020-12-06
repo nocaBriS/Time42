@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
         btnlogin.setOnClickListener(view -> getTest());
 
-
         //Username: admin
         //password: admin
     }
@@ -64,38 +63,46 @@ public class LoginActivity extends AppCompatActivity {
     private void getTest()
     {
 
-        DocumentReference docRef = db.collection("User").document(nameText.getText().toString());
+        DocumentReference docRef = db.collection("User").document("admin");
         docRef
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
+                        try {
+                            DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                if(document.get("password").equals(passText.getText().toString()))
-                                {
-                                    failedText.setText("Logging in");
-                                    failedText.setVisibility(View.VISIBLE);
-                                    failedText.setTextColor(Color.GREEN);
+                                try {
+                                    if (document.get("Password").equals(passText.getText().toString())) {
+                                        failedText.setText("Logging in");
+                                        failedText.setVisibility(View.VISIBLE);
+                                        failedText.setTextColor(Color.GREEN);
 
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                                    editor.putString("name", document.getId());
-                                    editor.putLong("permission", (Long) document.get("Permission"));
-                                    editor.putString("email", document.get("Email").toString());
-                                    editor.apply();
+                                        editor.putString("name", document.getId());
+                                        editor.putLong("permission", (Long) document.get("Permission"));
+                                        editor.putString("email", document.get("Email").toString());
+                                        editor.apply();
 
-                                    launchActivity();
-                                }else{
-                                    failedText.setText("Username or Password is wrong");
-                                    failedText.setVisibility(View.VISIBLE);
-                                    failedText.setTextColor(getColor(R.color.Error));
+                                        launchActivity();
+                                    } else {
+                                        failedText.setText("Username or Password is wrong");
+                                        failedText.setVisibility(View.VISIBLE);
+                                        failedText.setTextColor(getColor(R.color.Error));
+                                    }
+                                } catch (NullPointerException e) {
+                                    Log.i("LoginActivity", e + "");
                                 }
                             } else {
-                            failedText.setText("No User found");
-                            failedText.setVisibility(View.VISIBLE);
-                            failedText.setTextColor(getColor(R.color.Error));
+                                failedText.setText("No User found");
+                                failedText.setVisibility(View.VISIBLE);
+                                failedText.setTextColor(getColor(R.color.Error));
                             }
+                        }catch(NullPointerException e)
+                        {
+                            Log.i("LoginActivity", e + "");
+                        }
                     } else {
                         failedText.setText("Database Error: " + task.getException());
                         failedText.setVisibility(View.VISIBLE);

@@ -8,11 +8,13 @@ public class Project {
     String name;
     Date start;
     Date end;
+    int id;
 
-    public Project(String name, Date start, Date end) {
+    public Project(String name, Date start, Date end, int id) {
         this.name = name;
         this.start = start;
         this.end = end;
+        this.id = id;
     }
 
     public String getName() {
@@ -37,5 +39,13 @@ public class Project {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

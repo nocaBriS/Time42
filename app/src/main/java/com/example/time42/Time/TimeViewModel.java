@@ -1,4 +1,4 @@
-package com.example.time42.Calendar;
+package com.example.time42.Time;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,51 +6,50 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.time42.Object.testCalender;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
-public class CalendarViewModel extends AndroidViewModel {
-    ArrayList<testCalender> list = new ArrayList<>();
+public class TimeViewModel extends AndroidViewModel {
 
-    testCalender tmp1 = new testCalender("Geburtstag", "30.11.2002", "30.11.2002");
-    SharedPreferences sharedpreferences;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences sharedpreferences;
 
 
-    private MutableLiveData<ArrayList<testCalender>> mObj;
+    public MutableLiveData<Date> mDate;
 
-    public CalendarViewModel(Application application) {
+    public MutableLiveData<Date> getmDate() {
+        if (mDate == null) {
+            mDate = new MutableLiveData<>();
+        }
+        return mDate;
+    }
+
+    public TimeViewModel(Application application, int id) {
         super(application);
-        Log.i("CalendarViewModel", "test");
 
-        list.add(tmp1);
-        mObj = new MutableLiveData<>();
+        if (mDate == null) {
+            mDate = new MutableLiveData<>();
+        }
+        mDate.postValue(Calendar.getInstance().getTime());
 
         sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
         checkExist();
     }
 
-    public LiveData<ArrayList<testCalender>> getProject() {
-        return mObj;
-    }
-
-
     private void checkExist() {
-        Log.i("CalendarViewModel", "test");
 
-        CollectionReference colRef = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar");
+        CollectionReference colRef = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time");
         colRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
 
             if (queryDocumentSnapshots.isEmpty()) {
                 //Create Collection
-                db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar")
+                db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time")
                         .add(new HashMap<>())
                         .addOnSuccessListener(aVoid -> Log.i("CalendarViewModel", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.i("CalendarViewModel", "Error writing document", e));
@@ -63,4 +62,6 @@ public class CalendarViewModel extends AndroidViewModel {
         });
 
     }
+
+
 }

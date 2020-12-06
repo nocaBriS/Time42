@@ -1,23 +1,23 @@
 package com.example.time42.Calendar;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.time42.Object.testCalender;
 import com.example.time42.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +34,8 @@ public class CalendarFragment extends Fragment {
 
     View root;
 
+    FirebaseFirestore db;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -42,6 +44,8 @@ public class CalendarFragment extends Fragment {
         mListView = root.findViewById(R.id.calenderList);
 
         calendar = Calendar.getInstance();
+
+        db = FirebaseFirestore.getInstance();
 
         calendar.set(Calendar.MONTH, Calendar.NOVEMBER);
         calendar.set(Calendar.DAY_OF_MONTH, 9);
@@ -62,11 +66,11 @@ public class CalendarFragment extends Fragment {
         return root;
     }
 
-    private void bindAdapterToListView(ListView lv)
-    {
+    private void bindAdapterToListView(ListView lv) {
         lv.setAdapter(new CalendarAdapter(this.getContext(),
                 R.layout.listitem_calender,
                 items));
     }
+
 
 }

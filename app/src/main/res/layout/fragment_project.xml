@@ -13,7 +13,9 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false">
+        android:headerDividersEnabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </ListView>
 
@@ -27,5 +29,120 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        tools:src="@drawable/ic_add_24px" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/circle"
+        android:layout_above="@+id/addFAB"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Project.AddProject.AddProjectFragment">
+
+        <EditText
+            android:id="@+id/NameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="84dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="96dp"
+            android:text="ProjektName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/DescTextView"
+            android:layout_width="331dp"
+            android:layout_height="248dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:hint="Beschreibung"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/NameTextView" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saveFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="336dp"
+            android:layout_marginTop="656dp"
+            android:backgroundTint="@color/color_states_materialbutton"
+            android:clickable="true"
+            android:src="@drawable/ic_done_24px"
+            app:backgroundTint="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextStartDate"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="36dp"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:hint="startdate"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/DescTextView" />
+
+        <EditText
+            android:id="@+id/editTextEndDate"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="24dp"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:hint="enddate"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/DescTextView" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
+            android:text="Von:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/DescTextView" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Von:"
+            app:layout_constraintEnd_toStartOf="@+id/editTextEndDate"
+            app:layout_constraintTop_toBottomOf="@+id/DescTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

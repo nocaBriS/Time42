@@ -21,4 +21,36 @@
 
             android:title="@string/menu_Calender" />
     </group>
+
+    <group >
+        <item
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:enabled="false"
+            android:title="" />
+        <item
+            android:title=""
+            android:enabled="false" />
+
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:menuCategory="alternative">
+
+        <item
+            android:id="@+id/nav_admin"
+
+            android:title="Admin" />
+        <item
+            android:id="@+id/nav_logout"
+
+            android:title="Logout" />
+    </group>
 </menu>

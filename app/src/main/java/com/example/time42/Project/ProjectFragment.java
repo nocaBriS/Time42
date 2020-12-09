@@ -1,8 +1,8 @@
 package com.example.time42.Project;
 
 import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -20,6 +21,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,8 +30,11 @@ import androidx.navigation.Navigation;
 import com.example.time42.Object.Project;
 import com.example.time42.R;
 import com.example.time42.Time.TimeFragment;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectFragment extends Fragment {
@@ -38,6 +43,7 @@ public class ProjectFragment extends Fragment {
 
     private List<Project> items;
     private ListView mListView;
+    private ProgressBar progBar;
 
     private boolean tmp = true;
 
@@ -47,68 +53,29 @@ public class ProjectFragment extends Fragment {
 
     SharedPreferences sharedPreferences;
 
+    //2nd View
+    EditText startDate;
+    EditText endDate;
+
+    MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.dateRangePicker();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_project, container, false);
 
         mListView = root.findViewById(R.id.list);
-        ProgressBar progBar = root.findViewById(R.id.progressBar);
+        progBar = root.findViewById(R.id.progressBar);
         fab = root.findViewById(R.id.addFAB);
 
-        shape = (ConstraintLayout) root.findViewById(R.id.circle);
+        //2nd View
+        shape = root.findViewById(R.id.circle);
         shape.setVisibility(View.INVISIBLE);
         shape.setEnabled(false);
+        startDate = root.findViewById(R.id.editTextStartDate);
+        endDate = root.findViewById(R.id.editTextEndDate);
 
-        fab.setOnClickListener(v -> {
-
-            //revealShow(v);
-
-
-            if (tmp) {
-
-                Animator animator = ViewAnimationUtils.createCircularReveal(
-                        shape,
-                        shape.getWidth() - 130,
-                        shape.getHeight() - 130,
-                        0,
-                        (float) Math.hypot(shape.getWidth(), shape.getHeight()));
-
-                shape.setVisibility(View.VISIBLE);
-                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                if (shape.getVisibility() == View.VISIBLE) {
-                    animator.setDuration(400);
-                    animator.start();
-                    shape.setEnabled(true);
-                }
-            } else {
-
-                Animator animator = ViewAnimationUtils.createCircularReveal(
-                        shape,
-                        shape.getWidth() - 130,
-                        shape.getHeight() - 130,
-                        (float) Math.hypot(shape.getWidth(), shape.getHeight()),
-                        0);
-
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        shape.setVisibility(View.INVISIBLE);
-                    }
-                });
-
-                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                    animator.setDuration(400);
-                    animator.start();
-                    shape.setEnabled(false);
-
-            }
-
-            tmp = !tmp;
-
-
-        });
+        fab.setOnClickListener(this::revealShow);
 
         progBar.setVisibility(View.VISIBLE);
 
@@ -117,6 +84,29 @@ public class ProjectFragment extends Fragment {
             items = list;
             bindAdapterToListView(mListView);
             progBar.setVisibility(View.GONE);
+        });
+
+        //[Date Picker] builder
+        builder.setTitleText("SELECT A DATE");
+        builder.setTheme(R.style.ThemeOverlay_MaterialComponents_MaterialCalendar);
+        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
+
+        //[Date Picker] Listener
+        startDate.setOnClickListener(v ->
+                materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER")
+        );
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+            Long stDate = selection.first;
+            Long enDate = selection.second;
+
+            @SuppressLint("SimpleDateFormat")
+            String stdateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(stDate));
+            @SuppressLint("SimpleDateFormat")
+            String endateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(enDate));
+
+            startDate.setText(stdateString);
+            endDate.setText(endateString);
+
         });
 
         //mListView.setOnItemClickListener((parent, view, position, id) -> test(view, position));
@@ -171,49 +161,51 @@ public class ProjectFragment extends Fragment {
                 items));
     }
 
+    //FAB Animation
     private void revealShow(View view) {
 
-        int w = view.getWidth();
-        int h = view.getHeight();
-
-        int endRadius = (int) Math.hypot(w, h);
-
-        int cx = (int) (shape.getX() + (shape.getWidth() / 2));
-        int cy = (int) (shape.getY() + (shape.getHeight() / 2));
-
-
         if (tmp) {
-            Animator revealAnimator = ViewAnimationUtils.createCircularReveal(
+
+            Animator animator = ViewAnimationUtils.createCircularReveal(
                     shape,
-                    cx,
-                    cy,
+                    shape.getWidth() - 130,
+                    shape.getHeight() - 130,
                     0,
-                    endRadius);
+                    (float) Math.hypot(shape.getWidth(), shape.getHeight()));
 
-            shape.setVisibility(View.INVISIBLE);
-            fab.setVisibility(View.VISIBLE);
-            revealAnimator.setDuration(500);
-            revealAnimator.start();
-
+            shape.setVisibility(View.VISIBLE);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            if (shape.getVisibility() == View.VISIBLE) {
+                animator.setDuration(400);
+                animator.start();
+                shape.setEnabled(true);
+            }
         } else {
 
-            Animator anim =
-                    ViewAnimationUtils.createCircularReveal(shape,
-                            cx, cy,
-                            endRadius,
-                            shape.getWidth() / 2);
+            Animator animator = ViewAnimationUtils.createCircularReveal(
+                    shape,
+                    shape.getWidth() - 130,
+                    shape.getHeight() - 130,
+                    (float) Math.hypot(shape.getWidth(), shape.getHeight()),
+                    0);
 
-            anim.addListener(new AnimatorListenerAdapter() {
+            animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    shape.setVisibility(View.VISIBLE);
-                    fab.setVisibility(View.INVISIBLE);
+                    shape.setVisibility(View.INVISIBLE);
                 }
             });
-            anim.setDuration(500);
-            anim.start();
+
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(400);
+            animator.start();
+            shape.setEnabled(false);
+
         }
+
+        tmp = !tmp;
+
     }
 
 }

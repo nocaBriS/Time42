@@ -82,28 +82,3 @@ public class CalendarViewModel extends AndroidViewModel {
         });
     }
 }
-
-
-
-                /*queryDocumentSnapshots -> {
-
-            if (queryDocumentSnapshots.isEmpty()) {
-                //Create Collection
-                db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar")
-                        .add(new HashMap<>())
-                        .addOnSuccessListener(aVoid -> Log.i("CalendarViewModel", "DocumentSnapshot successfully written!"))
-                        .addOnFailureListener(e -> Log.i("CalendarViewModel", "Error writing document", e));
-
-            } else {
-                //find all Calendar Dates
-                Log.i("CalendarViewModel", "find all Calendar Dates");
-                Task<QuerySnapshot> task = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar").get();
-                //QuerySnapshot qSnapshot = colRef.get().getResult();
-                for (QueryDocumentSnapshot document: task.getResult()) {
-                    Map<String, Object> map = document.getData();
-                    Calendar cal = new Calendar((String) map.get("name"), (Timestamp) map.get("startDate"), (Timestamp) map.get("endDate"));
-                }
-            }
-
-        });*/
-

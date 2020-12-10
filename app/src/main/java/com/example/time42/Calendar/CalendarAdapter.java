@@ -6,25 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
-import com.example.time42.Object.testCalender;
+import com.example.time42.Object.MyCalendar;
 import com.example.time42.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CalendarAdapter extends BaseAdapter{
 
-    private List<testCalender> list;
+    private List<MyCalendar> list;
     private final int layoutId;
     private final LayoutInflater inflater;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     private TextView text2;
     private TextView text3;
     private ImageButton btn;
     private boolean isexpand = false;
 
-    public CalendarAdapter(Context ctx, int layoutId, List<testCalender> list)
+    public CalendarAdapter(Context ctx, int layoutId, List<MyCalendar> list)
     {
         this.list = list;
         this.layoutId = layoutId;
@@ -46,10 +50,12 @@ public class CalendarAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        testCalender calender = list.get(i);
+        MyCalendar calender = list.get(i);
         View listItem = (view == null) ? inflater.inflate(this.layoutId, null) : view;
+        Date startDate = calender.getStartDate().toDate();
+        Date endDate = calender.getEndDate().toDate();
         ((TextView) listItem.findViewById(R.id.ErgName)).setText(calender.getName());
-        ((TextView) listItem.findViewById(R.id.ErgZeit)).setText(calender.getDatum1() + " - " + calender.getDatum2());
+        ((TextView) listItem.findViewById(R.id.ErgZeit)).setText(dateFormat.format(startDate) + " - " + dateFormat.format(endDate));
 
         return listItem;
     }

@@ -1,6 +1,7 @@
 package com.example.time42.Project;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,7 +20,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
@@ -33,6 +33,8 @@ import com.example.time42.R;
 import com.example.time42.Time.TimeFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -66,6 +68,9 @@ public class ProjectFragment extends Fragment {
     EditText descText;
     EditText startDate;
     EditText endDate;
+
+    Date stDate;
+    Date enDate;
 
     MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.dateRangePicker();
 
@@ -113,13 +118,13 @@ public class ProjectFragment extends Fragment {
                 materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER")
         );
         materialDatePicker.addOnPositiveButtonClickListener(selection -> {
-            Long stDate = selection.first;
-            Long enDate = selection.second;
+            stDate = new Date(selection.first);
+            enDate = new Date(selection.second);
 
             @SuppressLint("SimpleDateFormat")
-            String stdateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(stDate));
+            String stdateString = new SimpleDateFormat("dd/MM/yyyy").format(stDate);
             @SuppressLint("SimpleDateFormat")
-            String endateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(enDate));
+            String endateString = new SimpleDateFormat("dd/MM/yyyy").format(enDate);
 
             startDate.setText(stdateString);
             endDate.setText(endateString);
@@ -130,7 +135,7 @@ public class ProjectFragment extends Fragment {
         mListView.setOnItemClickListener((parent, view, position, id) -> {
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt("id", items.get(position).getId());
+                    bundle.putString("id", items.get(position).getId());
 
                     TimeFragment myFragment = new TimeFragment();
                     myFragment.setArguments(bundle);
@@ -180,22 +185,53 @@ public class ProjectFragment extends Fragment {
                 items));
     }
 
-    private void saveProject(View view)
-    {
+    private void saveProject(View view) {
 
         Map<String, Object> city = new HashMap<>();
-        city.put("Beschreibung", descText.getText().toString());
-        city.put("EndDate", endDate.getText().toString());
         city.put("Name", nameText.getText().toString());
+        city.put("Beschreibung", descText.getText().toString());
+        city.put("StartDate", stDate);
+        city.put("EndDate", enDate);
         city.put("Owner", sharedPreferences.getString("name", "Name:"));
-        city.put("StartDate", startDate.getText().toString());
+
         List<String> list = new ArrayList<String>();
         list.add(sharedPreferences.getString("name", "Name:"));
         city.put("User", list);
 
-        db.collection("Project").document()
+        String id = db.collection("Project").document().getId();
+
+        db.collection("Project").document(id)
                 .set(city)
-                .addOnSuccessListener(aVoid -> Log.i("ProjectFragment", "DocumentSnapshot successfully written!"))
+                .addOnSuccessListener(aVoid -> {
+
+                            getId();
+                            DocumentReference UserRef = db.collection("User").document(sharedPreferences.getString("name", "Name:"));
+
+                            // Atomically add a new region to the "regions" array field.
+
+                            UserRef.update("ProjectIDs", FieldValue.arrayUnion(id));
+
+                            Animator animator = ViewAnimationUtils.createCircularReveal(
+                                    shape,
+                                    shape.getWidth() - 130,
+                                    shape.getHeight() - 130,
+                                    (float) Math.hypot(shape.getWidth(), shape.getHeight()),
+                                    0);
+
+                            animator.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    shape.setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+                            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                            animator.setDuration(400);
+                            animator.start();
+                            shape.setEnabled(false);
+                        }
+                )
                 .addOnFailureListener(e -> Log.i("ProjectFragment", "Error writing document", e));
 
     }

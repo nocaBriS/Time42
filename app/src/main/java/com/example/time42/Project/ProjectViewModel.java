@@ -60,7 +60,7 @@ public class ProjectViewModel extends AndroidViewModel {
                                                     DocumentSnapshot document1 = task1.getResult();
                                                     if (document1.exists()) {
 
-                                                        Project tmp = new Project((String) document1.getData().get("Name"), ((Timestamp) document1.getData().get("StartDate")).toDate(), ((Timestamp) document1.getData().get("EndDate")).toDate(),  Integer.parseInt(document1.getId()), (String) document.getData().get("Beschreibung"), (String) document.getData().get("Owner"));
+                                                        Project tmp = new Project((String) document1.getData().get("Name"), ((Timestamp) document1.getData().get("StartDate")).toDate(), ((Timestamp) document1.getData().get("EndDate")).toDate(),  document1.getId(), (String) document.getData().get("Beschreibung"), (String) document.getData().get("Owner"));
                                                         list.add(tmp);
                                                         mObj.setValue(list);
                                                     }

@@ -8,11 +8,11 @@ public class Project {
     String name;
     Date start;
     Date end;
-    int id;
+    String id;
     String desc;
     String owner;
 
-    public Project(String name, Date start, Date end, int id, String desc, String owner) {
+    public Project(String name, Date start, Date end, String id, String desc, String owner) {
         this.name = name;
         this.start = start;
         this.end = end;
@@ -45,11 +45,11 @@ public class Project {
         this.end = end;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

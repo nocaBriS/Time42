@@ -9,12 +9,16 @@ public class Project {
     Date start;
     Date end;
     int id;
+    String desc;
+    String owner;
 
-    public Project(String name, Date start, Date end, int id) {
+    public Project(String name, Date start, Date end, int id, String desc, String owner) {
         this.name = name;
         this.start = start;
         this.end = end;
         this.id = id;
+        this.desc = desc;
+        this.owner = owner;
     }
 
     public String getName() {
@@ -47,5 +51,21 @@ public class Project {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

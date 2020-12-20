@@ -1,8 +1,8 @@
 package com.example.time42.Project;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
@@ -32,10 +33,14 @@ import com.example.time42.R;
 import com.example.time42.Time.TimeFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectFragment extends Fragment {
 
@@ -49,11 +54,16 @@ public class ProjectFragment extends Fragment {
 
     View root;
     ConstraintLayout shape;
-    FloatingActionButton fab;
+    FloatingActionButton addFab;
+    FloatingActionButton saveFab;
 
     SharedPreferences sharedPreferences;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     //2nd View
+    EditText nameText;
+    EditText descText;
     EditText startDate;
     EditText endDate;
 
@@ -66,16 +76,23 @@ public class ProjectFragment extends Fragment {
 
         mListView = root.findViewById(R.id.list);
         progBar = root.findViewById(R.id.progressBar);
-        fab = root.findViewById(R.id.addFAB);
+        addFab = root.findViewById(R.id.addFAB);
+
+        sharedPreferences = getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
+
 
         //2nd View
         shape = root.findViewById(R.id.circle);
         shape.setVisibility(View.INVISIBLE);
         shape.setEnabled(false);
+        saveFab = root.findViewById(R.id.saveFAB);
+        nameText = root.findViewById(R.id.NameEdit);
+        descText = root.findViewById(R.id.descEdit);
         startDate = root.findViewById(R.id.editTextStartDate);
         endDate = root.findViewById(R.id.editTextEndDate);
 
-        fab.setOnClickListener(this::revealShow);
+        saveFab.setOnClickListener(this::saveProject);
+        addFab.setOnClickListener(this::revealShow);
 
         progBar.setVisibility(View.VISIBLE);
 
@@ -132,6 +149,7 @@ public class ProjectFragment extends Fragment {
         return root;
     }
 
+
     private void test(View v, int pos) {
 
         Log.i("ProjectFragment", items.get(pos).getId() + ": id");
@@ -139,6 +157,7 @@ public class ProjectFragment extends Fragment {
 
     }
 
+    //Wird grad nicht verwendet
     private void expand(View v) {
         ImageButton btn = v.findViewById(R.id.expandButton);
         ConstraintLayout expandableView = v.findViewById(R.id.expandView);
@@ -161,6 +180,26 @@ public class ProjectFragment extends Fragment {
                 items));
     }
 
+    private void saveProject(View view)
+    {
+
+        Map<String, Object> city = new HashMap<>();
+        city.put("Beschreibung", descText.getText().toString());
+        city.put("EndDate", endDate.getText().toString());
+        city.put("Name", nameText.getText().toString());
+        city.put("Owner", sharedPreferences.getString("name", "Name:"));
+        city.put("StartDate", startDate.getText().toString());
+        List<String> list = new ArrayList<String>();
+        list.add(sharedPreferences.getString("name", "Name:"));
+        city.put("User", list);
+
+        db.collection("Project").document()
+                .set(city)
+                .addOnSuccessListener(aVoid -> Log.i("ProjectFragment", "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.i("ProjectFragment", "Error writing document", e));
+
+    }
+
     //FAB Animation
     private void revealShow(View view) {
 
@@ -179,8 +218,9 @@ public class ProjectFragment extends Fragment {
                 animator.setDuration(400);
                 animator.start();
                 shape.setEnabled(true);
+                addFab.setVisibility(View.INVISIBLE);
             }
-        } else {
+        } /*else {
 
             Animator animator = ViewAnimationUtils.createCircularReveal(
                     shape,
@@ -202,7 +242,7 @@ public class ProjectFragment extends Fragment {
             animator.start();
             shape.setEnabled(false);
 
-        }
+        } */
 
         tmp = !tmp;
 

@@ -30,7 +30,7 @@ public class ProfileViewModel extends AndroidViewModel {
     public MutableLiveData<User> mUser;
     public MutableLiveData<User> getUser() {
         if (mUser == null) {
-            mUser = new MutableLiveData<User>();
+            mUser = new MutableLiveData<>();
         }
         return mUser;
     }
@@ -38,7 +38,7 @@ public class ProfileViewModel extends AndroidViewModel {
     public MutableLiveData<byte[]> mImage;
     public MutableLiveData<byte[]> getImagePath() {
         if (mImage == null) {
-            mImage = new MutableLiveData<byte[]>();
+            mImage = new MutableLiveData<>();
         }
         return mImage;
     }
@@ -64,13 +64,11 @@ public class ProfileViewModel extends AndroidViewModel {
                 });
 
         downloadImage();
-
     }
 
     public void downloadImage()
     {
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://time42-5d136.appspot.com");
-
 
         mStorageRef.child("20190824_174157.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
             // Use the bytes to display the image

@@ -53,14 +53,14 @@ public class ProjectViewModel extends AndroidViewModel {
 
                                 for (int i = 0; i < projectIDs.size(); i++) {
 
-                                    DocumentReference proRef = db.collection("Project").document(projectIDs.get(i).toString());
+                                    DocumentReference proRef = db.collection("Project").document((String) projectIDs.get(i));
                                     proRef.get()
                                             .addOnCompleteListener(task1 -> {
                                                 if (task1.isSuccessful()) {
                                                     DocumentSnapshot document1 = task1.getResult();
                                                     if (document1.exists()) {
 
-                                                        Project tmp = new Project((String) document1.getData().get("Name"), ((Timestamp) document1.getData().get("StartDate")).toDate(), ((Timestamp) document1.getData().get("EndDate")).toDate(),  Integer.parseInt(document1.getId()));
+                                                        Project tmp = new Project((String) document1.getData().get("Name"), ((Timestamp) document1.getData().get("StartDate")).toDate(), ((Timestamp) document1.getData().get("EndDate")).toDate(),  Integer.parseInt(document1.getId()), (String) document.getData().get("Beschreibung"), (String) document.getData().get("Owner"));
                                                         list.add(tmp);
                                                         mObj.setValue(list);
                                                     }

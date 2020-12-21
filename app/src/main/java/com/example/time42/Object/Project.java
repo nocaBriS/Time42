@@ -11,6 +11,22 @@ public class Project {
     String id;
     String desc;
     String owner;
+    Long hours;
+    Long status;
+    float done;
+
+
+    public Project(String name, Date start, Date end, String id, String desc, String owner, Long hours, Long status, float done) {
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.id = id;
+        this.desc = desc;
+        this.owner = owner;
+        this.hours = hours;
+        this.status = status;
+        this.done = done;
+    }
 
     public Project(String name, Date start, Date end, String id, String desc, String owner) {
         this.name = name;
@@ -19,6 +35,13 @@ public class Project {
         this.id = id;
         this.desc = desc;
         this.owner = owner;
+    }
+
+    public Project(String name, Date start, Date end, String id) {
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.id = id;
     }
 
     public String getName() {
@@ -67,5 +90,29 @@ public class Project {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public Long getHours() {
+        return hours;
+    }
+
+    public void setHours(Long hours) {
+        this.hours = hours;
+    }
+
+    public Long getStatus() {
+        return status;
+    }
+
+    public void setStatus(Long status) {
+        this.status = status;
+    }
+
+    public float getDone() {
+        return done;
+    }
+
+    public void setDone(float done) {
+        this.done = done;
     }
 }

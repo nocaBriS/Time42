@@ -1,10 +1,9 @@
 package com.example.time42.Project;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -19,12 +18,11 @@ import java.util.ArrayList;
 public class ProjectViewModel extends AndroidViewModel {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    SharedPreferences sharedpreferences;
 
-    ArrayList<Project> list = new ArrayList<>();
+    public MutableLiveData<Project> mObj;
 
-    public MutableLiveData<ArrayList<Project>> mObj;
-    public MutableLiveData<ArrayList<Project>> getProject() {
+
+    public MutableLiveData<Project> getProject() {
         if (mObj == null) {
             mObj = new MutableLiveData<>();
         }
@@ -33,43 +31,28 @@ public class ProjectViewModel extends AndroidViewModel {
 
     String name;
 
-
-    public ProjectViewModel(Application application) {
+    public ProjectViewModel(@NonNull Application application, String mId) {
         super(application);
 
-        sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
+        DocumentReference projectRef = db.collection("Project").document(mId);
 
-        name = sharedpreferences.getString("name", "test");
-
-        DocumentReference proIDref = db.collection("User").document(name);
-
-        proIDref.get()
+        projectRef.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         try {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                ArrayList projectIDs = (ArrayList) document.getData().get("ProjectIDs");
+                            Project tmp = new Project((String) document.getData().get("Name"),
+                                                        ((Timestamp) document.getData().get("StartDate")).toDate(),
+                                                        ((Timestamp) document.getData().get("EndDate")).toDate(),
+                                                        (String) document.getId(),
+                                                        (String) document.getData().get("Beschreibung"),
+                                                        (String) document.getData().get("Owner"),
+                                                        (Long) document.getData().get("Hours"),
+                                                        (Long) document.getData().get("Status"),
+                                                        (Long) document.getData().get("Done"));
 
-                                for (int i = 0; i < projectIDs.size(); i++) {
+                            mObj.setValue(tmp);
 
-                                    DocumentReference proRef = db.collection("Project").document((String) projectIDs.get(i));
-                                    proRef.get()
-                                            .addOnCompleteListener(task1 -> {
-                                                if (task1.isSuccessful()) {
-                                                    DocumentSnapshot document1 = task1.getResult();
-                                                    if (document1.exists()) {
-
-                                                        Project tmp = new Project((String) document1.getData().get("Name"), ((Timestamp) document1.getData().get("StartDate")).toDate(), ((Timestamp) document1.getData().get("EndDate")).toDate(),  document1.getId(), (String) document.getData().get("Beschreibung"), (String) document.getData().get("Owner"));
-                                                        list.add(tmp);
-                                                        mObj.setValue(list);
-                                                    }
-                                                }
-
-                                            });
-
-                                }
-                            }
                         } catch (NullPointerException e) {
                             Log.i("ProjectViewModel", e + "");
                         }
@@ -77,8 +60,5 @@ public class ProjectViewModel extends AndroidViewModel {
                 });
 
     }
-
-
-
-
+    // TODO: Implement the ViewModel
 }

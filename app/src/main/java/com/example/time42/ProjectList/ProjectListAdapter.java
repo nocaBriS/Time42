@@ -1,11 +1,10 @@
-package com.example.time42.Project;
+package com.example.time42.ProjectList;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.time42.Object.Project;
@@ -15,13 +14,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ProjectAdapter extends BaseAdapter {
+public class ProjectListAdapter extends BaseAdapter {
 
     private List<Project> list;
     private final int layoutId;
     private final LayoutInflater inflater;
 
-    public ProjectAdapter(Context ctx, int layoutId, List<Project> list) {
+    public ProjectListAdapter(Context ctx, int layoutId, List<Project> list) {
         this.list = list;
         this.layoutId = layoutId;
         this.inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

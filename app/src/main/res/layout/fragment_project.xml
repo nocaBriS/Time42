@@ -4,146 +4,209 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Project.ProjectFragment" >
+    tools:context=".Project.ProjectFragment"
+    android:id="@+id/frameLayout2" >
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </ListView>
+        <ImageView
+            android:id="@+id/CardImage"
+            android:layout_width="match_parent"
+            android:layout_height="202dp"
+            android:layout_marginEnd="0dp"
+            android:focusable="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/test" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_add_24px"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
-        tools:src="@drawable/ic_add_24px" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/circle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:background="?android:colorBackground"
-        tools:context=".Project.AddProject.AddProjectFragment"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <EditText
-            android:id="@+id/NameEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="84dp"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="202dp"
+            android:background="@drawable/gradient" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/ProjektName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="96dp"
-            android:text="ProjektName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/descEdit"
-            android:layout_width="331dp"
-            android:layout_height="248dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:hint="Beschreibung"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NameEdit" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/saveFAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/ic_done_24px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />>
-
-        <EditText
-            android:id="@+id/editTextStartDate"
-            android:layout_width="140dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="36dp"
-            android:ems="10"
-            android:focusableInTouchMode="false"
-            android:hint="startdate"
-            android:inputType="date"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toBottomOf="@+id/descEdit" />
-
-        <EditText
-            android:id="@+id/editTextEndDate"
-            android:layout_width="140dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="154dp"
             android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:focusableInTouchMode="false"
-            android:hint="enddate"
-            android:inputType="date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descEdit" />
+            android:focusable="false"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Name"
+            android:textColor="#9EFFFFFF"
+            android:textSize="36sp" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:text="Von:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descEdit" />
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="Von:"
-            app:layout_constraintEnd_toStartOf="@+id/editTextEndDate"
-            app:layout_constraintTop_toBottomOf="@+id/descEdit" />
+    <TextView
+        android:id="@+id/hoursText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:text="Hours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.example.time42.ProjectList.CircleProgressBar
+        android:id="@+id/custom_progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/hoursText"
+        app:layout_constraintStart_toStartOf="@+id/hoursText"
+        app:layout_constraintTop_toBottomOf="@+id/hoursText"
+        app:progress="48"
+        app:progressBarThickness="5dp"
+        app:progressbarColor="@color/purple_500" />
+
+    <com.example.time42.ProjectList.CircleProgressBar
+        android:id="@+id/custom_progressBar5"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/statusText"
+        app:layout_constraintStart_toStartOf="@+id/statusText"
+        app:layout_constraintTop_toBottomOf="@+id/statusText"
+        app:progress="100"
+        app:progressBarThickness="24dp"
+        app:progressbarColor="@color/yellow"
+
+
+        />
+
+    <com.example.time42.ProjectList.CircleProgressBar
+        android:id="@+id/custom_progressBar6"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/doneText"
+        app:layout_constraintStart_toStartOf="@+id/doneText"
+        app:layout_constraintTop_toBottomOf="@+id/doneText"
+        app:progress="50"
+        app:progressBarThickness="5dp"
+        app:progressbarColor="@android:color/holo_orange_dark" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Status"
+        app:layout_constraintEnd_toStartOf="@+id/doneText"
+        app:layout_constraintStart_toEndOf="@+id/hoursText"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
+
+    <TextView
+        android:id="@+id/doneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:text="Done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/custom_progressBar5" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Beschreibung"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Meeting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="0dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/hourTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar"
+        app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
+        app:layout_constraintTop_toTopOf="@+id/custom_progressBar" />
+
+    <TextView
+        android:id="@+id/StatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grün"
+        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar5"
+        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar5"
+        app:layout_constraintStart_toStartOf="@+id/custom_progressBar5"
+        app:layout_constraintTop_toTopOf="@+id/custom_progressBar5" />
+
+    <TextView
+        android:id="@+id/DoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100%"
+        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar6"
+        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar6"
+        app:layout_constraintStart_toStartOf="@+id/custom_progressBar6"
+        app:layout_constraintTop_toTopOf="@+id/custom_progressBar6" />
+
+    <ListView
+        android:id="@+id/meetingList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <ListView
+        android:id="@+id/userList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:colorBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,10 +62,10 @@ public class CalendarViewModel extends AndroidViewModel {
                 if (task.isSuccessful()) {
                     if (task.getResult() == null) {
                         //Create Collection
-                        db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar")
+                        /*db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar")
                                 .add(new HashMap<>())
                                 .addOnSuccessListener(aVoid -> Log.i("CalendarViewModel", "DocumentSnapshot successfully written!"))
-                                .addOnFailureListener(e -> Log.i("CalendarViewModel", "Error writing document", e));
+                                .addOnFailureListener(e -> Log.i("CalendarViewModel", "Error writing document", e));*/
                     } else {
                         //find all Calendar Dates
                         Log.i("CalendarViewModel", "find all Calendar Dates");

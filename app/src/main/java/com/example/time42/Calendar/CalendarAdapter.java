@@ -52,6 +52,7 @@ public class CalendarAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         MyCalendar calender = list.get(i);
         View listItem = (view == null) ? inflater.inflate(this.layoutId, null) : view;
+
         Date startDate = calender.getStartDate().toDate();
         Date endDate = calender.getEndDate().toDate();
         ((TextView) listItem.findViewById(R.id.ErgName)).setText(calender.getName());

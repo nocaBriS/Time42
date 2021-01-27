@@ -2,211 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Project.ProjectFragment"
-    android:id="@+id/frameLayout2" >
+    tools:context=".Project.ProjectFragment" >
 
-    <FrameLayout
-        android:id="@+id/frameLayout3"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/CardImage"
-            android:layout_width="match_parent"
-            android:layout_height="202dp"
-            android:layout_marginEnd="0dp"
-            android:focusable="false"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/test" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="202dp"
-            android:background="@drawable/gradient" />
-
-        <TextView
-            android:id="@+id/ProjektName"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="154dp"
-            android:layout_marginEnd="24dp"
-            android:focusable="false"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Name"
-            android:textColor="#9EFFFFFF"
-            android:textSize="36sp" />
+            android:text="Zeit" />
 
-    </FrameLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Projekt" />
 
-    <TextView
-        android:id="@+id/hoursText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
-        android:text="Hours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
+    </com.google.android.material.tabs.TabLayout>
 
-    <com.example.time42.ProjectList.CircleProgressBar
-        android:id="@+id/custom_progressBar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/hoursText"
-        app:layout_constraintStart_toStartOf="@+id/hoursText"
-        app:layout_constraintTop_toBottomOf="@+id/hoursText"
-        app:progress="48"
-        app:progressBarThickness="5dp"
-        app:progressbarColor="@color/purple_500" />
-
-    <com.example.time42.ProjectList.CircleProgressBar
-        android:id="@+id/custom_progressBar5"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/statusText"
-        app:layout_constraintStart_toStartOf="@+id/statusText"
-        app:layout_constraintTop_toBottomOf="@+id/statusText"
-        app:progress="100"
-        app:progressBarThickness="24dp"
-        app:progressbarColor="@color/yellow"
-
-
-        />
-
-    <com.example.time42.ProjectList.CircleProgressBar
-        android:id="@+id/custom_progressBar6"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/doneText"
-        app:layout_constraintStart_toStartOf="@+id/doneText"
-        app:layout_constraintTop_toBottomOf="@+id/doneText"
-        app:progress="50"
-        app:progressBarThickness="5dp"
-        app:progressbarColor="@android:color/holo_orange_dark" />
-
-    <TextView
-        android:id="@+id/statusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Status"
-        app:layout_constraintEnd_toStartOf="@+id/doneText"
-        app:layout_constraintStart_toEndOf="@+id/hoursText"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
-
-    <TextView
-        android:id="@+id/doneText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="64dp"
-        android:text="Done"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_progressBar5" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Beschreibung"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Meeting"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="0dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    <TextView
-        android:id="@+id/hourTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="100"
-        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar"
-        app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
-        app:layout_constraintTop_toTopOf="@+id/custom_progressBar" />
-
-    <TextView
-        android:id="@+id/StatusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Grün"
-        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar5"
-        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar5"
-        app:layout_constraintStart_toStartOf="@+id/custom_progressBar5"
-        app:layout_constraintTop_toTopOf="@+id/custom_progressBar5" />
-
-    <TextView
-        android:id="@+id/DoneTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="100%"
-        app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar6"
-        app:layout_constraintEnd_toEndOf="@+id/custom_progressBar6"
-        app:layout_constraintStart_toStartOf="@+id/custom_progressBar6"
-        app:layout_constraintTop_toTopOf="@+id/custom_progressBar6" />
-
-    <ListView
-        android:id="@+id/meetingList"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-    <ListView
-        android:id="@+id/userList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?android:colorBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

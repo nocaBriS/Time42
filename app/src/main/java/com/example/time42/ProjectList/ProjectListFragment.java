@@ -31,7 +31,6 @@ import androidx.navigation.Navigation;
 import com.example.time42.Object.Project;
 import com.example.time42.Project.ProjectFragment;
 import com.example.time42.R;
-import com.example.time42.Time.TimeFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
@@ -187,28 +186,29 @@ public class ProjectListFragment extends Fragment {
 
     private void saveProject(View view) {
 
-        Map<String, Object> city = new HashMap<>();
-        city.put("Name", nameText.getText().toString());
-        city.put("Beschreibung", descText.getText().toString());
-        city.put("StartDate", stDate);
-        city.put("EndDate", enDate);
-        city.put("Owner", sharedPreferences.getString("name", "Name:"));
+        Map<String, Object> proj = new HashMap<>();
+        proj.put("Name", nameText.getText().toString());
+        proj.put("Beschreibung", descText.getText().toString());
+        proj.put("StartDate", stDate);
+        proj.put("EndDate", enDate);
+        proj.put("Owner", sharedPreferences.getString("name", "Name:"));
+        proj.put("Status", 1);
+        proj.put("Hours", 0);
 
         List<String> list = new ArrayList<String>();
         list.add(sharedPreferences.getString("name", "Name:"));
-        city.put("User", list);
+        proj.put("User", list);
 
         String id = db.collection("Project").document().getId();
 
         db.collection("Project").document(id)
-                .set(city)
+                .set(proj)
                 .addOnSuccessListener(aVoid -> {
 
                             getId();
                             DocumentReference UserRef = db.collection("User").document(sharedPreferences.getString("name", "Name:"));
 
                             // Atomically add a new region to the "regions" array field.
-
                             UserRef.update("ProjectIDs", FieldValue.arrayUnion(id));
 
                             Animator animator = ViewAnimationUtils.createCircularReveal(

@@ -1,52 +1,62 @@
 package com.example.time42.Project;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.time42.R;
+import com.google.android.material.tabs.TabLayout;
 
 public class ProjectFragment extends Fragment {
-
-    private ProjectViewModel mViewModel;
 
     public static ProjectFragment newInstance() {
         return new ProjectFragment();
     }
 
-    View root;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPageAdapter viewPageAdapter;
 
-    TextView projectName;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_project, container, false);
+        View root = inflater.inflate(R.layout.fragment_project, container, false);
 
-        String id = null;
-        Bundle bundle = this.getArguments();
-        if(bundle !=null) {
-            id = bundle.getString("id");
-        }
-        projectName = root.findViewById(R.id.ProjektName);
-
-        mViewModel = new ViewModelProvider(this, new ProjectViewModelFactory(this.getActivity().getApplication(), id)).get(ProjectViewModel.class);
-        mViewModel.getProject().observe(getViewLifecycleOwner(), obj -> {
-
-            projectName.setText(obj.getName());
-
-
-        });
+        viewPager = root.findViewById(R.id.viewpage);
+        tabLayout = root.findViewById(R.id.tabLayout);
 
         return root;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        String id = null;
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            id = bundle.getString("id");
+        }
+        viewPageAdapter = new ViewPageAdapter(getParentFragmentManager(), id);
+
+        viewPager.setAdapter(viewPageAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        viewPageAdapter = new ViewPageAdapter(null, null);
+        viewPager.setAdapter(null);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
 
 }

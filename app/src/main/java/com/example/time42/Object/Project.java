@@ -13,10 +13,9 @@ public class Project {
     String owner;
     Long hours;
     Long status;
-    float done;
 
 
-    public Project(String name, Date start, Date end, String id, String desc, String owner, Long hours, Long status, float done) {
+    public Project(String name, Date start, Date end, String id, String desc, String owner, Long hours, Long status) {
         this.name = name;
         this.start = start;
         this.end = end;
@@ -25,7 +24,6 @@ public class Project {
         this.owner = owner;
         this.hours = hours;
         this.status = status;
-        this.done = done;
     }
 
     public Project(String name, Date start, Date end, String id, String desc, String owner) {
@@ -108,11 +106,4 @@ public class Project {
         this.status = status;
     }
 
-    public float getDone() {
-        return done;
-    }
-
-    public void setDone(float done) {
-        this.done = done;
-    }
 }

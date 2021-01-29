@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "298414529861",
+    "firebase_url": "https://time42-5d136.firebaseio.com",
+    "project_id": "time42-5d136",
+    "storage_bucket": "time42-5d136.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298414529861:android:d6eacec0d53b5952dd322c",
+        "android_client_info": {
+          "package_name": "com.example.time42"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298414529861-gebr24e1jpaf6fsdb9mrc65brdkbfffn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1auVzGScVm4b1sqwoABIvubq7_u4OxFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298414529861-gebr24e1jpaf6fsdb9mrc65brdkbfffn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

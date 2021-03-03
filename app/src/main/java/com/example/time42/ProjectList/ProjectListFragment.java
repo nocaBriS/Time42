@@ -161,7 +161,7 @@ public class ProjectListFragment extends Fragment {
 
     }
 
-    //Wird grad nicht verwendet
+    //wird grad nd verwendet
     private void expand(View v) {
         ImageButton btn = v.findViewById(R.id.expandButton);
         ConstraintLayout expandableView = v.findViewById(R.id.expandView);
@@ -185,6 +185,11 @@ public class ProjectListFragment extends Fragment {
     }
 
     private void saveProject(View view) {
+
+        if(nameText.getText().toString() == null)
+        {
+            return;
+        }
 
         Map<String, Object> proj = new HashMap<>();
         proj.put("Name", nameText.getText().toString());

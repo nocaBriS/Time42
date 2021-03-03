@@ -15,6 +15,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String vorname)
+    {
+        this.vorname = vorname;
+    }
+
     public String getVorname() {
         return vorname;
     }

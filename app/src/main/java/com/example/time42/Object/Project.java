@@ -2,6 +2,7 @@ package com.example.time42.Object;
 
 
 import java.util.Date;
+import java.util.List;
 
 public class Project {
 
@@ -13,6 +14,7 @@ public class Project {
     String owner;
     Long hours;
     Long status;
+    private List<User> items;
 
 
     public Project(String name, Date start, Date end, String id, String desc, String owner, Long hours, Long status) {
@@ -24,6 +26,18 @@ public class Project {
         this.owner = owner;
         this.hours = hours;
         this.status = status;
+    }
+
+    public Project(String name, Date start, Date end, String id, String desc, String owner, Long hours, Long status, List<User> user) {
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.id = id;
+        this.desc = desc;
+        this.owner = owner;
+        this.hours = hours;
+        this.status = status;
+        this.items = user;
     }
 
     public Project(String name, Date start, Date end, String id, String desc, String owner) {
@@ -106,4 +120,11 @@ public class Project {
         this.status = status;
     }
 
+    public List<User> getItems() {
+        return items;
+    }
+
+    public void setItems(List<User> items) {
+        this.items = items;
+    }
 }

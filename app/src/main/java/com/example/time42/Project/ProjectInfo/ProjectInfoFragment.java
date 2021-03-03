@@ -1,5 +1,6 @@
 package com.example.time42.Project.ProjectInfo;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -111,16 +112,21 @@ public class ProjectInfoFragment extends Fragment {
 
             @Override
             public void onSwipeBottom() {
-                mListView.setVisibility(View.INVISIBLE);
+                ObjectAnimator animation = ObjectAnimator.ofFloat(mListView, "translationY", 1000f);
+                animation.setDuration(500);
+                animation.start();
+
+            }
+
+            @Override
+            public void onSwipeTop() {
+                ObjectAnimator animation = ObjectAnimator.ofFloat(mListView, "translationY", 0f);
+                animation.setDuration(500);
+                animation.start();
             }
         });
 
-        root.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
-            @Override
-            public void onSwipeTop() {
-                mListView.setVisibility(View.VISIBLE);
-            }
-        });
+
 
 
         return root;

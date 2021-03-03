@@ -10,12 +10,18 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -108,21 +114,40 @@ public class ProjectInfoFragment extends Fragment {
         descTextView = root.findViewById(R.id.descTextView);
 
         mListView = root.findViewById(R.id.userList);
-        mListView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+
+        LinearLayout swipeLayout = root.findViewById(R.id.swipeLayout);
+        ImageView image = root.findViewById(R.id.imageView2);
+        swipeLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
 
             @Override
             public void onSwipeBottom() {
-                ObjectAnimator animation = ObjectAnimator.ofFloat(mListView, "translationY", 1000f);
+                ObjectAnimator animation = ObjectAnimator.ofFloat(swipeLayout, "translationY", 1080f);
                 animation.setDuration(500);
                 animation.start();
+
+                RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(500);
+                rotate.setInterpolator(new LinearInterpolator());
+                rotate.setFillAfter(true);
+                image.startAnimation(rotate);
 
             }
 
             @Override
             public void onSwipeTop() {
-                ObjectAnimator animation = ObjectAnimator.ofFloat(mListView, "translationY", 0f);
+                ObjectAnimator animation = ObjectAnimator.ofFloat(swipeLayout, "translationY", 0f);
                 animation.setDuration(500);
                 animation.start();
+
+
+                RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(500);
+                rotate.setInterpolator(new LinearInterpolator());
+                rotate.setFillAfter(true);
+                image.startAnimation(rotate);
+
+
+
             }
         });
 

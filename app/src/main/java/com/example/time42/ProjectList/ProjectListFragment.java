@@ -62,7 +62,6 @@ public class ProjectListFragment extends Fragment {
     SharedPreferences sharedPreferences;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
     //2nd View
     EditText nameText;
     EditText descText;
@@ -186,8 +185,7 @@ public class ProjectListFragment extends Fragment {
 
     private void saveProject(View view) {
 
-        if(nameText.getText().toString() == null)
-        {
+        if (nameText.getText().toString() == null) {
             return;
         }
 

@@ -135,10 +135,10 @@ public class ProjectInfoFragment extends Fragment {
 
             @Override
             public void onSwipeTop() {
+
                 ObjectAnimator animation = ObjectAnimator.ofFloat(swipeLayout, "translationY", 0f);
                 animation.setDuration(500);
                 animation.start();
-
 
                 RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 rotate.setDuration(500);
@@ -146,13 +146,8 @@ public class ProjectInfoFragment extends Fragment {
                 rotate.setFillAfter(true);
                 image.startAnimation(rotate);
 
-
-
             }
         });
-
-
-
 
         return root;
     }

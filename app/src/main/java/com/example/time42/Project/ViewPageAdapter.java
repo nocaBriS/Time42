@@ -28,6 +28,9 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
             fragment.setArguments(bundle);
         } else if (position == 1) {
             fragment = new TimeFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            fragment.setArguments(bundle);
 
         }
         return fragment;

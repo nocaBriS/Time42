@@ -9,7 +9,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.model.Document;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,8 +22,8 @@ public class TimeViewModel extends AndroidViewModel {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences sharedpreferences;
 
-
     public MutableLiveData<Date> mDate;
+    public String id;
 
     public MutableLiveData<Date> getmDate() {
         if (mDate == null) {
@@ -30,8 +32,9 @@ public class TimeViewModel extends AndroidViewModel {
         return mDate;
     }
 
-    public TimeViewModel(Application application, int id) {
+    public TimeViewModel(Application application, String id) {
         super(application);
+        this.id = id;
 
         if (mDate == null) {
             mDate = new MutableLiveData<>();
@@ -44,19 +47,18 @@ public class TimeViewModel extends AndroidViewModel {
 
     private void checkExist() {
 
-        CollectionReference colRef = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time");
-        colRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+        DocumentReference docRef = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time").document(id);
+        docRef.get().addOnSuccessListener(DocumentSnapshot -> {
 
-            if (queryDocumentSnapshots.isEmpty()) {
+            if (!DocumentSnapshot.exists()) {
                 //Create Collection
-                db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time")
-                        .add(new HashMap<>())
+                db.collection("User").document(sharedpreferences.getString("name", null)).collection("Time").document(id)
+                        .set(
+                                new HashMap<>()
+                        )
                         .addOnSuccessListener(aVoid -> Log.i("CalendarViewModel", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.i("CalendarViewModel", "Error writing document", e));
 
-            } else {
-                //find all Calendar Dates
-                Log.i("CalendarViewModel", "find all Calendar Dates");
             }
 
         });

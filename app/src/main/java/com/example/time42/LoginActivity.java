@@ -11,9 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText passText;
 
     TextView failedText;
+
+    private FirebaseAuth mAuth;
 
     SharedPreferences sharedpreferences;
 
@@ -49,10 +58,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         btnlogin.setOnClickListener(view -> getTest());
+        /*btnlogin.setOnClickListener(view -> signIn(nameText.getText().toString(), passText.getText().toString()));
+        mAuth = FirebaseAuth.getInstance();*/
 
         //Username: admin
         //password: admin
     }
+
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            reload();
+        }
+    }*/
 
     private void launchActivity() {
 
@@ -111,5 +131,68 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /*private void signIn(String email, String password) {
+        if(!validate()) {
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Authentication successful", Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    DocumentReference docRef = db.collection("User").get().
+
+                    editor.putString("name", document.getId());
+                    editor.putLong("permission", (Long) document.get("Permission"));
+                    editor.putString("email", document.get("Email").toString());
+                    editor.apply();
+
+                    launchActivity();
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    //update UI(null)
+                }
+
+            }
+        });
+
+    }
+
+    private void reload() {
+        mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    //update UI(mAuth.getCurrentUser())
+                    Toast.makeText(LoginActivity.this, "Reload successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Failed to reload User", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private boolean validate() {
+        boolean valid = false;
+        if(nameText.getText().toString().isEmpty()) {
+            failedText.setText("E-Mail or Password is missing");
+            valid = false;
+        } else {
+            valid = true;
+        }
+
+        if(passText.getText().toString().isEmpty()) {
+            failedText.setText("E-Mail or Password is missing");
+            valid = false;
+        } else {
+            valid = true;
+        }
+        return valid;
+    }*/
 
 }

@@ -7,6 +7,7 @@
 
 
     <string name="menu_home">Home</string>
+    <string name="menu_export">Exportiere Daten</string>
     <string name="menu_project">Projekte</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_Calender">Kalender</string>

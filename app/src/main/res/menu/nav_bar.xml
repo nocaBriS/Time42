@@ -20,6 +20,9 @@
             android:id="@+id/nav_calender"
 
             android:title="@string/menu_Calender" />
+        <item
+            android:id="@+id/nav_export"
+            android:title="@string/menu_export" />
     </group>
 
     <group >

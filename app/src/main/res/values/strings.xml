@@ -11,7 +11,7 @@
     <string name="menu_project">Projekte</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_Calender">Kalender</string>
-    <string name="export_text">Zeitraum zum exportieren von Daten wählen</string>
+    <string name="export_text">Zeitraum zum Exportieren der Daten wählen</string>
 
     <string name="nav_header_name">Name:</string>
     <string name="nav_header_bild">bild</string>

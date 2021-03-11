@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
         nameView = root.findViewById(R.id.nameView);
-        nameView.setText(sharedPreferences.getString("name", "Name"));
+        nameView.setText(sharedPreferences.getString("full name", "Name"));
 
         final TextView textView = root.findViewById(R.id.textView7);
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

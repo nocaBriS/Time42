@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("name", document.getId());
                                         editor.putLong("permission", (Long) document.get("Permission"));
                                         editor.putString("email", document.get("Email").toString());
+                                        editor.putString("full name", document.get("First").toString() + " " + document.get("Last").toString());
                                         editor.apply();
 
                                         launchActivity();

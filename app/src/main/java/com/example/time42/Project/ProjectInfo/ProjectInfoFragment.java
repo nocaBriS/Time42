@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,23 +16,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.time42.Calendar.CalendarAdapter;
-import com.example.time42.Object.MyCalendar;
 import com.example.time42.Object.User;
-import com.example.time42.Project.ProjectFragment;
 import com.example.time42.Project.User.UserlistAdapter;
 import com.example.time42.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Observer;
 
 public class ProjectInfoFragment extends Fragment {
 
@@ -55,6 +50,9 @@ public class ProjectInfoFragment extends Fragment {
     TextView descTextView;
     CircleProgressBar statusBar;
 
+    FloatingActionButton Fab;
+    Observer observer;
+
     private Context mContext;
     Resources res;
 
@@ -68,6 +66,8 @@ public class ProjectInfoFragment extends Fragment {
         if (bundle != null) {
             id = bundle.getString("id");
         }
+
+        //Fab.setOnClickListener(v -> addUser());
 
         mViewModel = new ViewModelProvider(this, new ProjectInfoViewModelFactory(this.getActivity().getApplication(), id)).get(ProjectInfoViewModel.class);
         mViewModel.getProject().observe(getViewLifecycleOwner(), obj -> {
@@ -100,6 +100,14 @@ public class ProjectInfoFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // res = getActivity().getResources();
+        Log.i("test", "Create");
+
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -114,6 +122,8 @@ public class ProjectInfoFragment extends Fragment {
         descTextView = root.findViewById(R.id.descTextView);
 
         mListView = root.findViewById(R.id.userList);
+
+        Fab = root.findViewById(R.id.addFAB);
 
         LinearLayout swipeLayout = root.findViewById(R.id.swipeLayout);
         ImageView image = root.findViewById(R.id.imageView2);
@@ -150,6 +160,11 @@ public class ProjectInfoFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public void addUser() {
+
+
     }
 
     @Override

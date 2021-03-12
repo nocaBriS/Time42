@@ -69,6 +69,8 @@ public class TimeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         timepicker.setIs24HourView(true);
+        timepicker.setHour(0);
+        timepicker.setMinute(0);
         btn.setOnClickListener(this::saveTime);
 
         sharedpreferences = getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
@@ -78,7 +80,6 @@ public class TimeFragment extends Fragment {
         if (bundle != null) {
             id = bundle.getString("id");
         }
-
 
         TimeViewModel mViewModel = new ViewModelProvider(this, new TimeViewModelFactory(this.getActivity().getApplication(), id)).get(TimeViewModel.class);
 

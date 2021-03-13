@@ -2,7 +2,9 @@ package com.example.time42.Project.ProjectInfo;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +14,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -123,7 +127,8 @@ public class ProjectInfoFragment extends Fragment {
 
         mListView = root.findViewById(R.id.userList);
 
-        Fab = root.findViewById(R.id.addFAB);
+        Fab = root.findViewById(R.id.addFab);
+        Fab.setOnClickListener(v -> addUser());
 
         LinearLayout swipeLayout = root.findViewById(R.id.swipeLayout);
         ImageView image = root.findViewById(R.id.imageView2);
@@ -164,6 +169,23 @@ public class ProjectInfoFragment extends Fragment {
 
     public void addUser() {
 
+        final EditText userText = new EditText(this.getContext());
+        userText.setHint("Username");
+        new AlertDialog.Builder(this.getContext())
+                .setView(userText)
+                .setMessage("Member hinzufügen")
+
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+
+                    if(userText.getText().length() > 1) {
+                        Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .show();
 
     }
 

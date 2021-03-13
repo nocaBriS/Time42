@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     private void getTest()
     {
 
-        DocumentReference docRef = db.collection("User").document("admin");
+        DocumentReference docRef = db.collection("User").document(nameText.getText().toString());
         docRef
                 .get()
                 .addOnCompleteListener(task -> {

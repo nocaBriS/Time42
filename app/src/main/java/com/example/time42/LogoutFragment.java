@@ -23,7 +23,7 @@ public class LogoutFragment extends Fragment {
         super.onCreate(savedInstanceState);
         sharedpreferences = getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
 
-        sharedpreferences.edit().clear().commit();
+        sharedpreferences.edit().clear().apply();
         LoginActivity login = new LoginActivity();
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);

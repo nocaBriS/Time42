@@ -1,5 +1,7 @@
 package com.example.time42.Project.ProjectInfo;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -7,6 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +22,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.time42.Project.ProjectFragment;
+import com.example.time42.Object.User;
+import com.example.time42.Project.User.UserlistAdapter;
 import com.example.time42.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
+import java.util.Observer;
 
 public class ProjectInfoFragment extends Fragment {
-
-    private ProjectInfoViewModel mViewModel;
 
     public static ProjectInfoFragment newInstance() {
         return new ProjectInfoFragment();
@@ -27,17 +38,23 @@ public class ProjectInfoFragment extends Fragment {
 
     View root;
 
+    private List<User> items;
+    private ListView mListView;
+
+    ProjectInfoViewModel mViewModel;
+
     TextView projectName;
 
     TextView hourText;
     TextView statusText;
+    TextView descTextView;
     CircleProgressBar statusBar;
-    TextView doneText;
-    CircleProgressBar doneBar;
+
+    FloatingActionButton Fab;
+    Observer observer;
 
     private Context mContext;
     Resources res;
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -50,31 +67,48 @@ public class ProjectInfoFragment extends Fragment {
             id = bundle.getString("id");
         }
 
+        //Fab.setOnClickListener(v -> addUser());
+
         mViewModel = new ViewModelProvider(this, new ProjectInfoViewModelFactory(this.getActivity().getApplication(), id)).get(ProjectInfoViewModel.class);
         mViewModel.getProject().observe(getViewLifecycleOwner(), obj -> {
 
+            Log.i("test", obj.getName());
             projectName.setText(obj.getName());
 
             hourText.setText(obj.getHours() + "");
             switch (Integer.parseInt(String.valueOf(obj.getStatus()))) {
                 case 1:
-                    doneText.setText("Grün");
-                    statusBar.setColor(res.getColor(R.color.green));
+                    statusText.setText("Grün");
+                    //statusBar.setColor(res.getColor(R.color.green));
                     break;
                 case 3:
-                    doneText.setText("Rot");
-                    statusBar.setColor(res.getColor(R.color.red));
+                    statusText.setText("Rot");
+                    //statusBar.setColor(res.getColor(R.color.red));
                     break;
                 default:
-                    doneText.setText("Gelb");
-                    statusBar.setColor(res.getColor(R.color.yellow));
+                    statusText.setText("Gelb");
+                    //statusBar.setColor(res.getColor(R.color.yellow));
                     break;
             }
+
+            descTextView.setText(obj.getDesc());
+
+            items = obj.getItems();
+            bindAdapterToListView(mListView);
 
         });
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // res = getActivity().getResources();
+        Log.i("test", "Create");
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -83,34 +117,66 @@ public class ProjectInfoFragment extends Fragment {
         projectName = root.findViewById(R.id.ProjektName);
 
         hourText = root.findViewById(R.id.hourTextView);
-        statusText = root.findViewById(R.id.statusText);
+        statusText = root.findViewById(R.id.StatusTextView);
         statusBar = root.findViewById(R.id.statusBar);
+        descTextView = root.findViewById(R.id.descTextView);
+
+        mListView = root.findViewById(R.id.userList);
+
+        Fab = root.findViewById(R.id.addFAB);
+
+        LinearLayout swipeLayout = root.findViewById(R.id.swipeLayout);
+        ImageView image = root.findViewById(R.id.imageView2);
+        swipeLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+
+            @Override
+            public void onSwipeBottom() {
+                ObjectAnimator animation = ObjectAnimator.ofFloat(swipeLayout, "translationY", 1080f);
+                animation.setDuration(500);
+                animation.start();
+
+                RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(500);
+                rotate.setInterpolator(new LinearInterpolator());
+                rotate.setFillAfter(true);
+                image.startAnimation(rotate);
+
+            }
+
+            @Override
+            public void onSwipeTop() {
+
+                ObjectAnimator animation = ObjectAnimator.ofFloat(swipeLayout, "translationY", 0f);
+                animation.setDuration(500);
+                animation.start();
+
+                RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(500);
+                rotate.setInterpolator(new LinearInterpolator());
+                rotate.setFillAfter(true);
+                image.startAnimation(rotate);
+
+            }
+        });
 
         return root;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        res = mContext.getResources();
-        Log.i("test", "Create");
+    public void addUser() {
+
 
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (mContext == null)
-            mContext = context.getApplicationContext();
-        Log.i("test", "Attach");
-
+    public void onStop() {
+        super.onStop();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mContext = null;
-        Log.i("test", "Detach");
-
+    private void bindAdapterToListView(ListView lv) {
+        lv.setAdapter(new UserlistAdapter(this.getContext(),
+                R.layout.listitem_user,
+                items));
     }
+
+
 }

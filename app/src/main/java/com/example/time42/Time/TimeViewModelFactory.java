@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class TimeViewModelFactory implements ViewModelProvider.Factory {
     private Application mApplication;
-    private int mid;
+    private String mid;
 
 
-    public TimeViewModelFactory(Application application, int param) {
+    public TimeViewModelFactory(Application application, String param) {
         mApplication = application;
         mid = param;
     }

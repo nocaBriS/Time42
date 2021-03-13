@@ -25,24 +25,6 @@
             android:title="@string/menu_export" />
     </group>
 
-    <group >
-        <item
-            android:enabled="false"
-            android:title="" />
-        <item
-            android:enabled="false"
-            android:title="" />
-        <item
-            android:enabled="false"
-            android:title="" />
-        <item
-            android:enabled="false"
-            android:title="" />
-        <item
-            android:title=""
-            android:enabled="false" />
-
-    </group>
     <group
         android:checkableBehavior="single"
         android:menuCategory="alternative">

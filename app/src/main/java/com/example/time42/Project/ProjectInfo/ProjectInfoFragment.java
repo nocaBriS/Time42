@@ -4,11 +4,9 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.time42.Object.User;
@@ -40,7 +39,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observer;
 
 public class ProjectInfoFragment extends Fragment {
 
@@ -58,6 +56,7 @@ public class ProjectInfoFragment extends Fragment {
     private ListView mListView;
 
     String id;
+    Object obj;
 
     ProjectInfoViewModel mViewModel;
 
@@ -69,7 +68,6 @@ public class ProjectInfoFragment extends Fragment {
     CircleProgressBar statusBar;
 
     FloatingActionButton Fab;
-    Observer observer;
 
     private Context mContext;
     Resources res;
@@ -91,9 +89,14 @@ public class ProjectInfoFragment extends Fragment {
         //Fab.setOnClickListener(v -> addUser());
 
         mViewModel = new ViewModelProvider(this, new ProjectInfoViewModelFactory(this.getActivity().getApplication(), id)).get(ProjectInfoViewModel.class);
-        mViewModel.getProject().observe(getViewLifecycleOwner(), obj -> {
+        getData();
 
-            Log.i("test", obj.getName());
+    }
+
+    public void getData()
+    {
+        mViewModel.getProject().observe(this.getViewLifecycleOwner(), obj -> {
+
             projectName.setText(obj.getName());
 
             hourText.setText(obj.getHours() + "");
@@ -118,8 +121,9 @@ public class ProjectInfoFragment extends Fragment {
             bindAdapterToListView(mListView);
 
         });
-
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -249,6 +253,7 @@ public class ProjectInfoFragment extends Fragment {
                         });
 
                     }
+                    getData();
                 })
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
@@ -259,6 +264,7 @@ public class ProjectInfoFragment extends Fragment {
 
     @Override
     public void onStop() {
+        mViewModel.getProject().removeObservers(this);
         super.onStop();
     }
 

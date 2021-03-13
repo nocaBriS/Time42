@@ -12,10 +12,14 @@ import com.example.time42.Object.User;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class ProjectInfoViewModel extends AndroidViewModel {
 
@@ -58,6 +62,31 @@ public class ProjectInfoViewModel extends AndroidViewModel {
                         }
                     }
                 });
+
+        projectRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                return;
+            }
+
+            String source = snapshot != null && snapshot.getMetadata().hasPendingWrites()
+                    ? "Local" : "Server";
+
+            if (snapshot != null && snapshot.exists()) {
+                Project tmp = new Project((String) snapshot.getData().get("Name"),
+                        ((Timestamp) snapshot.getData().get("StartDate")).toDate(),
+                        ((Timestamp) snapshot.getData().get("EndDate")).toDate(),
+                        snapshot.getId(),
+                        (String) snapshot.getData().get("Beschreibung"),
+                        (String) snapshot.getData().get("Owner"),
+                        (Long) snapshot.getData().get("Hours"),
+                        (Long) snapshot.getData().get("Status"),
+                        (List<User>) snapshot.getData().get("User"));
+
+                mObj.postValue(tmp);
+            } else {
+            }
+        });
+
 
     }
     // TODO: Implement the ViewModel

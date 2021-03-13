@@ -5,8 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +32,14 @@ import com.example.time42.Object.User;
 import com.example.time42.Project.User.UserlistAdapter;
 import com.example.time42.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observer;
 
 public class ProjectInfoFragment extends Fragment {
@@ -40,10 +48,16 @@ public class ProjectInfoFragment extends Fragment {
         return new ProjectInfoFragment();
     }
 
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences sharedpreferences;
+
     View root;
 
     private List<User> items;
     private ListView mListView;
+
+    String id;
 
     ProjectInfoViewModel mViewModel;
 
@@ -60,16 +74,19 @@ public class ProjectInfoFragment extends Fragment {
     private Context mContext;
     Resources res;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i("test", "ViewCreated");
 
-        String id = null;
+        id = null;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             id = bundle.getString("id");
         }
+
+        sharedpreferences = getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
 
         //Fab.setOnClickListener(v -> addUser());
 
@@ -108,8 +125,6 @@ public class ProjectInfoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // res = getActivity().getResources();
-        Log.i("test", "Create");
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -177,9 +192,62 @@ public class ProjectInfoFragment extends Fragment {
 
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
 
-                    if(userText.getText().length() > 1) {
-                        Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
-                        toast.show();
+                    if (userText.getText().length() > 1) {
+
+                        Map<String, Object> user = new HashMap<>();
+
+                        //Projekt zu User hinzufügen
+                        DocumentReference docRef = db.collection("User").document(userText.getText().toString());
+                        docRef.get().addOnSuccessListener(DocumentSnapshot -> {
+                            if (DocumentSnapshot.exists()) {
+
+                                if (DocumentSnapshot.get("ProjectIDs") == null) {
+
+                                    user.put("ProjectIDs", Collections.emptyList());
+                                    docRef.update(user);
+                                    docRef.update("ProjectIDs", FieldValue.arrayUnion(id));
+
+                                    Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                } else {
+                                    docRef.update("ProjectIDs", FieldValue.arrayUnion(id));
+
+                                    Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+
+                                //User zu Projekt hinzufügen
+                                DocumentReference pjrRef = db.collection("Project").document(id);
+                                pjrRef.get().addOnSuccessListener(Document -> {
+                                    if (Document.exists()) {
+
+                                        if (Document.get("User") == null) {
+
+                                            user.put("User", Collections.emptyList());
+                                            pjrRef.update(user);
+                                            pjrRef.update("User", FieldValue.arrayUnion(userText.getText().toString()));
+
+                                            Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
+                                            toast.show();
+
+                                        } else {
+                                            pjrRef.update("User", FieldValue.arrayUnion(userText.getText().toString()));
+
+                                            Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " wurde hinzugefügt", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+
+                                    }
+
+                                });
+
+                            } else {
+                                Toast toast = Toast.makeText(this.getContext(), "User: " + userText.getText() + " nicht gefunden!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+
+                        });
+
                     }
                 })
 

@@ -106,7 +106,7 @@ public class TimeFragment extends Fragment {
         docRef.get().addOnSuccessListener(DocumentSnapshot -> {
 
             if (DocumentSnapshot.exists()) {
-                if (DocumentSnapshot.getBoolean((String) DateFormat.format("dd MMM yyyy", date)) != null) {
+                if (DocumentSnapshot.getBoolean( (String) DateFormat.format("dd MMM yyyy", date) ) != null) {
 
                     docRef.set(time)
                             .addOnSuccessListener(aVoid -> Log.i("test", "DocumentSnapshot successfully written!"))

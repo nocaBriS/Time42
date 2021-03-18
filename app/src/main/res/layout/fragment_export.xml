@@ -7,17 +7,6 @@
     android:clickable="false"
     tools:context=".Export.ExportFragment">
 
-    <Button
-        android:id="@+id/btnExport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="256dp"
-        android:text="@string/export_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!--DatePicker
         android:id="@+id/datePicker"
         android:layout_marginLeft="16dp"
@@ -29,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"/-->
+
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="256dp"
+        android:text="@string/export_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.796" />
 
     <EditText
         android:id="@+id/etDatePicker"
@@ -53,18 +54,19 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvTest"
-        android:layout_width="189dp"
-        android:layout_height="121dp"
+        android:layout_width="377dp"
+        android:layout_height="229dp"
         android:layout_marginTop="23dp"
         android:layout_marginBottom="21dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/btnExport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDatePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/etDatePicker"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

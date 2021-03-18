@@ -43,7 +43,7 @@ public class ExportFragment extends Fragment {
     Date endDate = null;
 
 
-    HashMap<String, ArrayList<String>> times = new HashMap<>();
+    HashMap<String, HashMap<String, ArrayList<String>>> times = new HashMap<>();
 
     Button btnExport;
     TextView tvTest;
@@ -113,10 +113,14 @@ public class ExportFragment extends Fragment {
                         //QuerySnapshot qSnapshot = colRef.get().getResult();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Date tempStart = startDate;
+                            HashMap<String, ArrayList<String>> timesDoc = new HashMap<>();
 
                             while (tempStart.getTime() <= endDate.getTime()) {
                                 Log.i("ExportFragment", document.getId());
-                                times.put(sdfDB.format(tempStart), (ArrayList<String>) document.get(sdfDB.format(tempStart)));
+
+                                timesDoc.put(sdfDB.format(tempStart), (ArrayList<String>) document.get(sdfDB.format(tempStart)));
+                                times.put(document.getId(), timesDoc);
+                                        //(sdfDB.format(tempStart), (ArrayList<String>) document.get(sdfDB.format(tempStart)));
                                 tvTest.setText(times.toString());
 
                                 Calendar c  = Calendar.getInstance();

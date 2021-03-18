@@ -8,25 +8,37 @@
     tools:context=".Export.ExportFragment">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnExport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="256dp"
-        android:text="Export"
+        android:text="@string/export_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--DatePicker
+        android:id="@+id/datePicker"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/-->
 
     <EditText
         android:id="@+id/etDatePicker"
         android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
-        android:clickable="true"
+        android:clickable="false"
         android:editable="false"
         android:ems="10"
-        android:inputType="date"
+        android:inputType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"

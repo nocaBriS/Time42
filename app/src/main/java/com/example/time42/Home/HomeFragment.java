@@ -1,5 +1,6 @@
 package com.example.time42.Home;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -12,14 +13,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.time42.ProjectList.ProjectListViewModel;
 import com.example.time42.R;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private TextView nameView;
+
+    private Spinner prkSpinner;
+    private Spinner timeSpinner;
+
     SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,9 +43,43 @@ public class HomeFragment extends Fragment {
         nameView = root.findViewById(R.id.nameView);
         nameView.setText(sharedPreferences.getString("full name", "Name"));
 
-        final TextView textView = root.findViewById(R.id.textView7);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        prkSpinner = root.findViewById(R.id.prkSpinner);
+        timeSpinner = root.findViewById(R.id.timeSpinner);
+
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            prkSpinner.setAdapter(adapter);
+
+
+        });
+
+        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    public void changeGraph() {
+
     }
 
 }

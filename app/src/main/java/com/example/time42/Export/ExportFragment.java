@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.time42.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,6 +64,8 @@ public class ExportFragment extends Fragment {
 
         tvTest = root.findViewById(R.id.tvTest);
 
+        Toast t = Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_LONG);
+        t.show();
         //dp = root.findViewById(R.id.datePicker);
         //dp.setVisibility(View.VISIBLE);
 
@@ -128,12 +131,17 @@ public class ExportFragment extends Fragment {
                                 c.add(Calendar.DATE, 1);
                                 tempStart = c.getTime();
                             }
-
+                            exportData();
                         }
                     }
                 }
             }
         });
+
+    }
+
+    private void exportData() {
+        //projname;date;time
 
     }
 

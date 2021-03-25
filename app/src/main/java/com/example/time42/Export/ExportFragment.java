@@ -23,15 +23,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class ExportFragment extends Fragment {
@@ -45,6 +50,7 @@ public class ExportFragment extends Fragment {
 
 
     HashMap<String, HashMap<String, ArrayList<String>>> times = new HashMap<>();
+    private String data;
 
     Button btnExport;
     TextView tvTest;
@@ -64,8 +70,6 @@ public class ExportFragment extends Fragment {
 
         tvTest = root.findViewById(R.id.tvTest);
 
-        Toast t = Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_LONG);
-        t.show();
         //dp = root.findViewById(R.id.datePicker);
         //dp.setVisibility(View.VISIBLE);
 
@@ -142,6 +146,54 @@ public class ExportFragment extends Fragment {
 
     private void exportData() {
         //projname;date;time
+
+        data = "ProjectName;Date;hh.ss \n";
+
+
+        for(Map.Entry timesME: times.entrySet()) {
+            //key - String
+            //value - hashmap<String, arraylist<string>>
+            HashMap<String, ArrayList<String>> timesPerProject = (HashMap<String, ArrayList<String>>) timesME.getValue();
+            Iterator iterator = timesPerProject.entrySet().iterator();
+
+            while(iterator.hasNext()) {
+                //key - string
+                //value - arraylist<string>
+                Map.Entry timesPerProjectME = (Map.Entry) iterator.next();
+                ArrayList<String> timesPerProjectAL = (ArrayList<String>) timesPerProjectME.getValue();
+                if(timesPerProjectAL != null) {
+                    for (String s : timesPerProjectAL) {
+
+                        DocumentReference docRef = db.collection("Project").document(timesME.getKey().toString());
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()) {
+
+                                    //data += task.getResult().get("Name").toString() + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
+                                    writeForFile(task.getResult().get("Name").toString(), timesPerProjectME.getKey().toString(), s);
+                                }
+                                Log.d("ExportFragment", data);
+                                tvTest.setText(data);
+                                writeInFile(data);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
+    private void writeForFile(String projName, String date, String time) {
+        Log.d("ExportFragment", projName + date + time);
+        data += projName + ";" + date + ";" + time + "\n";
+        Log.d("ExportFragment", data);
+    }
+
+    private void writeInFile(String data) {
 
     }
 

@@ -113,7 +113,7 @@ public class TimeFragment extends Fragment {
                             .addOnFailureListener(e -> Log.i("test", "Error writing document", e));
 
                 } else {
-                    docRef.update((String) DateFormat.format("dd MM yy", date), FieldValue.arrayUnion(timepicker.getHour() + ";" + timepicker.getMinute()));
+                    docRef.update((String) DateFormat.format("dd MM yy", date), FieldValue.arrayUnion(timepicker.getHour() + "." + timepicker.getMinute()));
 
                 }
 

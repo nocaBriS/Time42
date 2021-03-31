@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.time42.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +28,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Console;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,12 +48,13 @@ public class ExportFragment extends Fragment {
     MaterialDatePicker mdp;
     static SimpleDateFormat sdfShown = new SimpleDateFormat("dd. MMMM yyyy");
     static SimpleDateFormat sdfDB = new SimpleDateFormat("dd MM yy");
+    static SimpleDateFormat sdfFilename = new SimpleDateFormat("dd.MM.yy");
     Date startDate = null;
     Date endDate = null;
 
 
     HashMap<String, HashMap<String, ArrayList<String>>> times = new HashMap<>();
-    private String data;
+    String data;
 
     Button btnExport;
     TextView tvTest;
@@ -69,9 +73,6 @@ public class ExportFragment extends Fragment {
         etDateRange = root.findViewById(R.id.etDatePicker);
 
         tvTest = root.findViewById(R.id.tvTest);
-
-        //dp = root.findViewById(R.id.datePicker);
-        //dp.setVisibility(View.VISIBLE);
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDatePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
         materialDatePickerBuilder.setTitleText("Wähle Zeitraum");
@@ -128,27 +129,99 @@ public class ExportFragment extends Fragment {
                                 timesDoc.put(sdfDB.format(tempStart), (ArrayList<String>) document.get(sdfDB.format(tempStart)));
                                 times.put(document.getId(), timesDoc);
                                         //(sdfDB.format(tempStart), (ArrayList<String>) document.get(sdfDB.format(tempStart)));
-                                tvTest.setText(times.toString());
+                                //tvTest.setText(times.toString());
 
                                 Calendar c  = Calendar.getInstance();
                                 c.setTime(tempStart);
                                 c.add(Calendar.DATE, 1);
                                 tempStart = c.getTime();
                             }
-                            exportData();
                         }
                     }
                 }
+                exportData();
             }
-        });
 
+        });
+        //exportData();
     }
 
     private void exportData() {
         //projname;date;time
 
-        data = "ProjectName;Date;hh.ss \n";
+        data = "";
 
+        for(Map.Entry timesME: times.entrySet()) {
+            //key - String
+            //value - hashmap<String, arraylist<string>>
+
+            DocumentReference docRef = db.collection("Project").document(timesME.getKey().toString());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+
+                        buildString(timesME, task.getResult().get("Name").toString());
+                    }
+
+                }
+            });
+        }
+
+    }
+
+    private void buildString(Map.Entry timesME, String projName) {
+        HashMap<String, ArrayList<String>> timesPerProject = (HashMap<String, ArrayList<String>>) timesME.getValue();
+        Iterator iterator = timesPerProject.entrySet().iterator();
+
+        while(iterator.hasNext()) {
+            //key - string
+            //value - arraylist<string>
+            Map.Entry timesPerProjectME = (Map.Entry) iterator.next();
+            ArrayList<String> timesPerProjectAL = (ArrayList<String>) timesPerProjectME.getValue();
+            if(timesPerProjectAL != null) {
+                for (String s : timesPerProjectAL) {
+                    data += projName + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
+                }
+            }
+        }
+        tvTest.setText(data);
+        writeInFile();
+    }
+
+
+
+    private void writeString(String projName, String date, String time) {
+        Log.d("ExportFragment", "writeString: " + projName + " " + date  + " " + time);
+        data += projName + ";" + date + ";" + time + "\n";
+    }
+
+    private void writeInFile() {
+        Log.d("ExportFragment", "----------------------------------------");
+        Date currentDate = new Date();
+        String filename = "DataExport_" + sdfFilename.format(startDate) + " - " + sdfFilename.format(endDate) + ".csv";
+        //String filename = "/storage/self/primary/ExportTime42/DataExport_" + sdfFilename.format(currentDate) + ".csv";
+
+        Log.d("ExportFragment", "data:" + data);
+        try {
+            FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE/*| Context.MODE_WORLD_READABLE*/);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+            bw.write("ProjectName;Date;hh.mm \n");
+            bw.write(data);
+            bw.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*private void exportData() {
+        //projname;date;time
+
+        data = "ProjectName;Date;hh.mm \n";
 
         for(Map.Entry timesME: times.entrySet()) {
             //key - String
@@ -170,31 +243,21 @@ public class ExportFragment extends Fragment {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful()) {
 
-                                    //data += task.getResult().get("Name").toString() + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
-                                    writeForFile(task.getResult().get("Name").toString(), timesPerProjectME.getKey().toString(), s);
+                                    data += task.getResult().get("Name").toString() + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
+                                    //writeString(task.getResult().get("Name").toString(), timesPerProjectME.getKey().toString(), s);
                                 }
-                                Log.d("ExportFragment", data);
                                 tvTest.setText(data);
-                                writeInFile(data);
                             }
                         });
+
                     }
                 }
             }
+
         }
+        //writeInFile();
 
-    }
+    }*/
 
-
-
-    private void writeForFile(String projName, String date, String time) {
-        Log.d("ExportFragment", projName + date + time);
-        data += projName + ";" + date + ";" + time + "\n";
-        Log.d("ExportFragment", data);
-    }
-
-    private void writeInFile(String data) {
-
-    }
 
 }

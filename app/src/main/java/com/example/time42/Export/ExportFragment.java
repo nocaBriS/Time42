@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -197,16 +199,21 @@ public class ExportFragment extends Fragment {
     }
 
     private void writeInFile() {
+        String state = Environment.getExternalStorageState();
+        if(!state.equals(Environment.MEDIA_MOUNTED)) return;
+        File outFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
         Log.d("ExportFragment", "----------------------------------------");
         Date currentDate = new Date();
         String filename = "DataExport_" + sdfFilename.format(startDate) + " - " + sdfFilename.format(endDate) + ".csv";
-        //String filename = "/storage/self/primary/ExportTime42/DataExport_" + sdfFilename.format(currentDate) + ".csv";
+        File file = new File(outFile, filename);
 
         Log.d("ExportFragment", "data:" + data);
         try {
-            FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE/*| Context.MODE_WORLD_READABLE*/);
+            //FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE/*| Context.MODE_WORLD_READABLE*/);
+            FileOutputStream fos = new FileOutputStream(file);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            bw.write("ProjectName;Date;hh.mm \n");
+            bw.write("ProjectName;Date;hh:mm \n");
             bw.write(data);
             bw.close();
 
@@ -217,47 +224,5 @@ public class ExportFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-    /*private void exportData() {
-        //projname;date;time
-
-        data = "ProjectName;Date;hh.mm \n";
-
-        for(Map.Entry timesME: times.entrySet()) {
-            //key - String
-            //value - hashmap<String, arraylist<string>>
-            HashMap<String, ArrayList<String>> timesPerProject = (HashMap<String, ArrayList<String>>) timesME.getValue();
-            Iterator iterator = timesPerProject.entrySet().iterator();
-
-            while(iterator.hasNext()) {
-                //key - string
-                //value - arraylist<string>
-                Map.Entry timesPerProjectME = (Map.Entry) iterator.next();
-                ArrayList<String> timesPerProjectAL = (ArrayList<String>) timesPerProjectME.getValue();
-                if(timesPerProjectAL != null) {
-                    for (String s : timesPerProjectAL) {
-
-                        DocumentReference docRef = db.collection("Project").document(timesME.getKey().toString());
-                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.isSuccessful()) {
-
-                                    data += task.getResult().get("Name").toString() + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
-                                    //writeString(task.getResult().get("Name").toString(), timesPerProjectME.getKey().toString(), s);
-                                }
-                                tvTest.setText(data);
-                            }
-                        });
-
-                    }
-                }
-            }
-
-        }
-        //writeInFile();
-
-    }*/
-
 
 }

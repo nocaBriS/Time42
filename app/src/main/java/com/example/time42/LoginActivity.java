@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
 
     private static final int RQ_WRITE_STORAGE = 12345;
+    private static final int RQ_READ_STORAGE = 54321;
 
 
 
@@ -57,11 +58,13 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences("logPref", Context.MODE_PRIVATE);
 
-        if(sharedpreferences.getInt("permission", 0) != 1) {
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RQ_WRITE_STORAGE);
-            }
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RQ_WRITE_STORAGE);
         }
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RQ_READ_STORAGE);
+        }
+
 
         if(sharedpreferences.getString("name",null) != null)
         {
@@ -214,8 +217,14 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode == RQ_WRITE_STORAGE) {
             if(grantResults.length>0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putInt("permission", 1);
+                editor.putInt("permission-write", 1);
+            }
+        } else if (requestCode == RQ_READ_STORAGE) {
+            if(grantResults.length>0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt("permission-read", 1);
             }
         }
+
     }
 }

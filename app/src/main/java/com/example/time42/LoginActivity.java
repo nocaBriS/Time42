@@ -1,8 +1,10 @@
 package com.example.time42;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
 
+    private static final int RQ_WRITE_STORAGE = 12345;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         failedText = findViewById(R.id.failedText);
 
         sharedpreferences = getSharedPreferences("logPref", Context.MODE_PRIVATE);
+
+        if(sharedpreferences.getInt("permission", 0) != 1) {
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RQ_WRITE_STORAGE);
+            }
+        }
 
         if(sharedpreferences.getString("name",null) != null)
         {
@@ -195,4 +207,15 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }*/
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == RQ_WRITE_STORAGE) {
+            if(grantResults.length>0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt("permission", 1);
+            }
+        }
+    }
 }

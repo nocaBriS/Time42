@@ -17,24 +17,27 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeViewModel extends AndroidViewModel {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences sharedpreferences;
 
-    ArrayList<Integer> timeList = new ArrayList<>();
     ArrayList<String> projectList = new ArrayList<>();
+    Date today = Calendar.getInstance().getTime();
 
     public MutableLiveData<ArrayList<String>> mObj;
-
     public MutableLiveData<ArrayList<String>> getAllProject() {
         if (mObj == null) {
             mObj = new MutableLiveData<>();
         }
         return mObj;
     }
+
 
     String name;
 
@@ -43,9 +46,7 @@ public class HomeViewModel extends AndroidViewModel {
         super(application);
 
         sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
-
         name = sharedpreferences.getString("name", null);
-
         CollectionReference timeRef = db.collection("User").document(name).collection("Time");
         timeRef.get()
                 .addOnCompleteListener(task -> {
@@ -63,6 +64,31 @@ public class HomeViewModel extends AndroidViewModel {
                     }
                 });
 
+
+
+    }
+
+    public HomeViewModel(Application application, String id, int time)
+    {
+        super(application);
+        Log.i("Date","today: " + LocalDate.now() + " 7 Tage: " + LocalDate.now().plusDays(time));
+        sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
+        name = sharedpreferences.getString("name", null);
+        DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(id);
+        timeRef.get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists())
+                        {
+
+                        }
+
+                    }
+                });
+
     }
 
 }
+

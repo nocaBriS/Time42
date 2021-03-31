@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,10 @@ import android.widget.TextView;
 import com.example.time42.ProjectList.ProjectListViewModel;
 import com.example.time42.R;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
@@ -63,18 +68,26 @@ public class HomeFragment extends Fragment {
 
         });
 
-        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            prkSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                    LocalDate today = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yy");
+                    Log.i("Date", (String) today.format(formatter));
 
-            }
+                    HomeGetTimeViewModel getTimeModel = new ViewModelProvider(this).get(HomeGetTimeViewModel.class);
+                    getTimeModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                    });
 
-            }
-        });
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
     }
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -185,7 +186,8 @@ public class ProjectListFragment extends Fragment {
 
     private void saveProject(View view) {
 
-        if (nameText.getText().toString() == null) {
+        if (nameText.getText().toString().length() == 0 ||descText.getText().toString().length() == 0 || startDate.getText().toString().length() == 0 || endDate.getText().toString().length() == 0 ) {
+            Toast.makeText(getContext(), "Alle Felder müssen ausgefüllt werden", Toast.LENGTH_LONG).show();
             return;
         }
 

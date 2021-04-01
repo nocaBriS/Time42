@@ -204,7 +204,6 @@ public class ExportFragment extends Fragment {
         File outFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         Log.d("ExportFragment", "----------------------------------------");
-        Date currentDate = new Date();
         String filename = "DataExport_" + sdfFilename.format(startDate) + " - " + sdfFilename.format(endDate) + ".csv";
         File file = new File(outFile, filename);
 

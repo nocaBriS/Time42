@@ -87,7 +87,7 @@ public class TimeFragment extends Fragment {
             date = d;
             String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
             WeekDay.setText(dayOfTheWeek);
-            String dat = (String) DateFormat.format("dd MMM yyyy", date); // 20 Jun 2020
+            String dat = (String) DateFormat.format("dd. MMMM yyyy", date); // 20. June 2020
             dateText.setText(dat);
             String time = (String) DateFormat.format("hh:mm", date); // 7:30
             timeText.setText(time);

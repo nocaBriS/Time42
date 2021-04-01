@@ -212,7 +212,7 @@ public class ExportFragment extends Fragment {
             //FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE/*| Context.MODE_WORLD_READABLE*/);
             FileOutputStream fos = new FileOutputStream(file);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            bw.write("ProjectName;Date;hh:mm \n");
+            bw.write("ProjectName;Date;hh:mm;Work \n");
             bw.write(data);
             bw.close();
 

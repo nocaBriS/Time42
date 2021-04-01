@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -46,6 +47,7 @@ public class TimeFragment extends Fragment {
     TextView WeekDay;
     TextView dateText;
     TextView timeText;
+    EditText etWork;
 
     Button btn;
 
@@ -59,6 +61,7 @@ public class TimeFragment extends Fragment {
         dateText = root.findViewById(R.id.DateTextView);
         timeText = root.findViewById(R.id.timeTextView);
         timepicker = root.findViewById(R.id.timePicker);
+        etWork = root.findViewById(R.id.etWork);
 
         btn = root.findViewById(R.id.button);
 
@@ -113,7 +116,7 @@ public class TimeFragment extends Fragment {
                             .addOnFailureListener(e -> Log.i("test", "Error writing document", e));
 
                 } else {
-                    docRef.update((String) DateFormat.format("dd MM yy", date), FieldValue.arrayUnion(timepicker.getHour() + ":" + timepicker.getMinute()));
+                    docRef.update((String) DateFormat.format("dd MM yy", date), FieldValue.arrayUnion(timepicker.getHour() + ":" + timepicker.getMinute() + ";" + etWork.getText().toString()));
 
                 }
 

@@ -23,35 +23,50 @@ public class HomeGetTimeViewModel extends AndroidViewModel {
     SharedPreferences sharedpreferences;
 
     public MutableLiveData<ArrayList<String>> mObj;
+    public MutableLiveData<ArrayList<String>> tmp;
+    public MutableLiveData<String> mid;
+
     public MutableLiveData<ArrayList<String>> getAllProject() {
         if (mObj == null) {
             mObj = new MutableLiveData<>();
         }
-        return mObj;
+        tmp = mObj;
+        mObj.setValue(null);
+        return tmp;
     }
+
 
 
     String name;
 
-    public HomeGetTimeViewModel(Application application, String id, int time)
-    {
+    public HomeGetTimeViewModel(Application application, int time) {
         super(application);
-        Log.i("Date","today: " + LocalDate.now() + " 7 Tage: " + LocalDate.now().plusDays(time));
+        Log.i("Date", "today: " + LocalDate.now() + " 7 Tage: " + LocalDate.now().plusDays(time));
         sharedpreferences = getApplication().getSharedPreferences("logPref", Context.MODE_PRIVATE);
         name = sharedpreferences.getString("name", null);
-        DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(id);
-        timeRef.get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
+        if (mid.getValue() != null) {
 
-                        DocumentSnapshot document = task.getResult();
-                        if(document.exists())
-                        {
+            Log.i("Date", "Value" + mid.getValue());
+
+            DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(mid.getValue());
+            timeRef.get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                //Get Time
+                            }
 
                         }
+                    });
+        }
+        else{
+            Log.i("Date", "Value" + mid.getValue());
 
-                    }
-                });
+        }
 
     }
+
+
 }

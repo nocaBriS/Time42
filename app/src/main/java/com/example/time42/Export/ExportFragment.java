@@ -59,7 +59,6 @@ public class ExportFragment extends Fragment {
     String data;
 
     Button btnExport;
-    TextView tvTest;
 
     SharedPreferences sharedpreferences;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -73,8 +72,6 @@ public class ExportFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_export, container, false);
         etDateRange = root.findViewById(R.id.etDatePicker);
-
-        tvTest = root.findViewById(R.id.tvTest);
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDatePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
         materialDatePickerBuilder.setTitleText("Wähle Zeitraum");
@@ -181,13 +178,12 @@ public class ExportFragment extends Fragment {
             //value - arraylist<string>
             Map.Entry timesPerProjectME = (Map.Entry) iterator.next();
             ArrayList<String> timesPerProjectAL = (ArrayList<String>) timesPerProjectME.getValue();
-            if(timesPerProjectAL != null) {
+            if (timesPerProjectAL != null) {
                 for (String s : timesPerProjectAL) {
                     data += projName + ";" + timesPerProjectME.getKey() + ";" + s + "\n";
                 }
             }
         }
-        tvTest.setText(data);
         writeInFile();
     }
 

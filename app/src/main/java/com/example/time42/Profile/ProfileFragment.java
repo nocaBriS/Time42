@@ -26,7 +26,6 @@ import com.example.time42.R;
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
-    Switch sw;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,14 +37,12 @@ public class ProfileFragment extends Fragment {
         TextView textVor = root.findViewById(R.id.nameEditText);
         TextView textUser = root.findViewById(R.id.usernameEditText);
         TextView textEmail = root.findViewById(R.id.emailEditText);
-        TextView textPass = root.findViewById(R.id.editTextTextPassword);
 
 
         profileViewModel.getUser().observe(getViewLifecycleOwner(), s -> {
             textVor.setText(s.getVorname());
             textUser.setText(s.getNachname());
             textEmail.setText(s.getEmail());
-            textPass.setText(s.getPassword());
         });
 
         ImageView image = root.findViewById(R.id.profilePictureView);
@@ -55,13 +52,11 @@ public class ProfileFragment extends Fragment {
             image.setImageBitmap(bitmap);
         });
 
-        sw = root.findViewById(R.id.darkThemeSwitch);
-        sw.setOnClickListener(v -> themeswitch());
 
         return root;
     }
 
-    public void themeswitch()
+    /*public void themeswitch()
     {
         if(sw.isChecked())
         {
@@ -71,6 +66,6 @@ public class ProfileFragment extends Fragment {
         {
             getActivity().setTheme(android.R.style.Theme_Light);
         }
-    }
+    }*/
 
 }

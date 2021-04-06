@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         TextView nav_emailText = headerView.findViewById(R.id.nav_emailText);
 
         //Setzt Namen und Email in der Navbar zu UserDaten
-        nav_nameText.setText(sharedpreferences.getString("name", "Name:"));
+        nav_nameText.setText(sharedpreferences.getString("full name", "Name:"));
         nav_emailText.setText(sharedpreferences.getString("email", "Email:"));
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(

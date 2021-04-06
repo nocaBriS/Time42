@@ -289,6 +289,4 @@ public class ProjectListFragment extends Fragment {
 
     }
 
-
-
 }

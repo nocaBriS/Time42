@@ -72,7 +72,7 @@ public class CalendarViewModel extends AndroidViewModel {
                         //Task<QuerySnapshot> task = db.collection("User").document(sharedpreferences.getString("name", null)).collection("Calendar").get();
                         //QuerySnapshot qSnapshot = colRef.get().getResult();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            MyCalendar cal = new MyCalendar(document.getId(), (Timestamp) document.getData().get("startDate"), (Timestamp) document.getData().get("endDate"));
+                            MyCalendar cal = new MyCalendar((String) document.getData().get("title"), (Timestamp) document.getData().get("startDate"), (Timestamp) document.getData().get("endDate"));
                             list.add(cal);
                             mObj.setValue(list);
                         }

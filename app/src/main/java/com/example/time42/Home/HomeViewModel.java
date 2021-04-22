@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.time42.Object.Project;
+import com.example.time42.Object.SpinnerProjectObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,11 +31,11 @@ public class HomeViewModel extends AndroidViewModel {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences sharedpreferences;
 
-    ArrayList<String> projectList = new ArrayList<>();
+    ArrayList<SpinnerProjectObject> projectList = new ArrayList<>();
     Date today = Calendar.getInstance().getTime();
 
-    public MutableLiveData<ArrayList<String>> mObj;
-    public MutableLiveData<ArrayList<String>> getAllProject() {
+    public MutableLiveData<ArrayList<SpinnerProjectObject>> mObj;
+    public MutableLiveData<ArrayList<SpinnerProjectObject>> getAllProject() {
         if (mObj == null) {
             mObj = new MutableLiveData<>();
         }
@@ -54,8 +58,8 @@ public class HomeViewModel extends AndroidViewModel {
                         try {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("document", document.getId() + " => " + document.getData());
-                                projectList.add(document.getId());
-
+                                //projectList.add(document.getId());
+                                getNameToId(document.getId());
                             }
                             mObj.setValue(projectList);
                         } catch (NullPointerException e) {
@@ -66,6 +70,23 @@ public class HomeViewModel extends AndroidViewModel {
 
 
 
+    }
+
+    public void getNameToId(String id) {
+        DocumentReference docRef = db.collection("Project").document(id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    Log.d("document", "Name " + task.getResult().get("Name").toString());
+                    addNameToProjectList(id, task.getResult().get("Name").toString());
+                }
+            }
+        });
+    }
+
+    public void addNameToProjectList(String id, String name) {
+        projectList.add(new SpinnerProjectObject(id, name));
     }
 
     public HomeViewModel(Application application, String id, int time)

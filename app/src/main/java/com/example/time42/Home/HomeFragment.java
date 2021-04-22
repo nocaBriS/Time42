@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.time42.Object.SpinnerProjectObject;
 import com.example.time42.Project.ProjectInfo.ProjectInfoViewModel;
 import com.example.time42.Project.ProjectInfo.ProjectInfoViewModelFactory;
 import com.example.time42.ProjectList.ProjectListViewModel;
@@ -84,25 +85,26 @@ public class HomeFragment extends Fragment {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
+            ArrayAdapter<SpinnerProjectObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             prkSpinner.setAdapter(adapter);
 
 
         });
-
+        prkSpinner.setSelection(0);
         prkSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 sharedpreferences = tmp.getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
                 String name = sharedpreferences.getString("name", null);
-                String mid = prkSpinner.getSelectedItem().toString();
+                //String mid = prkSpinner.getSelectedItem().toString();
+                SpinnerProjectObject spinObj = (SpinnerProjectObject) prkSpinner.getSelectedItem();
                 LocalDate today = LocalDate.now();
                 //Home Grafik
                 if (prkSpinner.getSelectedItem().toString() != null) {
 
-                    DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(mid.toString());
+                    DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(spinObj.getId());
                     timeRef.get()
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -183,6 +185,8 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
+
 
     public void changeGraph() {
 

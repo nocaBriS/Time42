@@ -10,7 +10,7 @@
         android:id="@+id/logoHomeView"
         android:layout_width="303dp"
         android:layout_height="158dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

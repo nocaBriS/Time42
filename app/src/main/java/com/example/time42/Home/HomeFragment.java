@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment {
                 String name = sharedpreferences.getString("name", null);
                 String mid = prkSpinner.getSelectedItem().toString();
                 LocalDate today = LocalDate.now();
-
+                //Home Grafik
                 if (prkSpinner.getSelectedItem().toString() != null) {
 
                     DocumentReference timeRef = db.collection("User").document(name).collection("Time").document(mid.toString());

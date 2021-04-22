@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.time42.Object.SpinnerProjectObject;
@@ -85,8 +86,8 @@ public class HomeFragment extends Fragment {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
-            ArrayAdapter<SpinnerProjectObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            SpinnerAdapter adapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, list);
+            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             prkSpinner.setAdapter(adapter);
 
 

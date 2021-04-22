@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,14 @@ public class HomeFragment extends Fragment {
         timeSpinner = root.findViewById(R.id.timeSpinner);
         barChart = root.findViewById(R.id.homeChart);
 
+        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
+            ArrayAdapter<SpinnerProjectObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            prkSpinner.setAdapter(adapter);
+            prkSpinner.setSelection(0);
+
+        });
+
         return root;
     }
 
@@ -85,20 +94,25 @@ public class HomeFragment extends Fragment {
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
-            SpinnerAdapter adapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, list);
-            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /*homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
+            ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             prkSpinner.setAdapter(adapter);
+            prkSpinner.setSelection(0);
+
+        });*/
 
 
-        });
-        prkSpinner.setSelection(0);
+        //prkSpinner.setSelection(0);
         prkSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 sharedpreferences = tmp.getActivity().getSharedPreferences("logPref", Context.MODE_PRIVATE);
                 String name = sharedpreferences.getString("name", null);
+                Log.d("onItemSelected", "Selected: " + name);
                 //String mid = prkSpinner.getSelectedItem().toString();
                 SpinnerProjectObject spinObj = (SpinnerProjectObject) prkSpinner.getSelectedItem();
                 LocalDate today = LocalDate.now();

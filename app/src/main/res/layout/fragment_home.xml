@@ -64,7 +64,8 @@
         android:entries="@array/array_time"
         android:scrollbarSize="4dp"
         app:layout_constraintBottom_toTopOf="@+id/homeChart"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:descendantFocusability="blocksDescendants"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

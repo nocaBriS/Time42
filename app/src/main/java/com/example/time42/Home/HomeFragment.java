@@ -77,13 +77,7 @@ public class HomeFragment extends Fragment {
         timeSpinner = root.findViewById(R.id.timeSpinner);
         barChart = root.findViewById(R.id.homeChart);
 
-        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
-            ArrayAdapter<SpinnerProjectObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            prkSpinner.setAdapter(adapter);
-            prkSpinner.setSelection(0);
 
-        });
 
         return root;
     }
@@ -94,13 +88,12 @@ public class HomeFragment extends Fragment {
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        /*homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
+        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
             ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             prkSpinner.setAdapter(adapter);
             prkSpinner.setSelection(0);
-
-        });*/
+        });
 
 
         //prkSpinner.setSelection(0);

@@ -53,11 +53,11 @@ public class HomeFragment extends Fragment {
     private Spinner timeSpinner;
 
     //Graph
-    BarChart barChart;
+    /*BarChart barChart;
     ArrayList<BarEntry> entries;
     ArrayList<String> labels;
     BarData data;
-    BarDataSet bardataset;
+    BarDataSet bardataset;*/
 
     SharedPreferences sharedpreferences;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -73,9 +73,9 @@ public class HomeFragment extends Fragment {
         nameView = root.findViewById(R.id.nameView);
         nameView.setText(sharedpreferences.getString("full name", "Name"));
 
-        prkSpinner = root.findViewById(R.id.prkSpinner);
-        timeSpinner = root.findViewById(R.id.timeSpinner);
-        barChart = root.findViewById(R.id.homeChart);
+        //prkSpinner = root.findViewById(R.id.prkSpinner);
+        //timeSpinner = root.findViewById(R.id.timeSpinner);
+        //barChart = root.findViewById(R.id.homeChart);
 
 
 
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
+        /*homeViewModel.getAllProject().observe(getViewLifecycleOwner(), list -> {
             ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             prkSpinner.setAdapter(adapter);
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
     }
 

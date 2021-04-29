@@ -10,7 +10,7 @@
         android:id="@+id/logoHomeView"
         android:layout_width="303dp"
         android:layout_height="158dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="188dp"
         android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginBottom="24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -53,6 +54,7 @@
         android:id="@+id/prkSpinner"
         android:layout_width="180dp"
         android:layout_height="45dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/homeChart"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,12 +62,13 @@
         android:id="@+id/timeSpinner"
         android:layout_width="115dp"
         android:layout_height="45dp"
+        android:descendantFocusability="blocksDescendants"
         android:dropDownWidth="wrap_content"
         android:entries="@array/array_time"
         android:scrollbarSize="4dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/homeChart"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:descendantFocusability="blocksDescendants"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
